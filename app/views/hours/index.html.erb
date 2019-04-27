@@ -1,0 +1,203 @@
+<%= javascript_include_tag "easytimer" %>
+<%= stylesheet_link_tag "hours" %>
+<%= stylesheet_link_tag "assets/plugins/clockpicker/dist/jquery-clockpicker.min.css" %>
+<%= stylesheet_link_tag "assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" %>
+<%= stylesheet_link_tag "assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" %>
+<%= javascript_include_tag "assets/plugins/clockpicker/dist/jquery-clockpicker.min.js" %>
+<%= javascript_include_tag "assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %>
+<%= javascript_include_tag "assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js" %>
+
+<% if current_user.clockify_key.nil? %>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <%= form_tag hours_path, method: :post, class: "form-horizontal form-material" do %>
+            <div class="form-group">
+              <label class="">Chave de API</label>
+              <%= text_field_tag :clockify_key, nil, class: "form-control form-control-line", placeholder: "Coloque aqui sua chave", autofocus: true, required: true %>
+            </div>
+
+            <div class="form-group">
+              <%= submit_tag 'Conectar ao Clockify', class: "btn btn-success" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="card">
+    <div class="card-body">
+      <div class="time-entry">
+        <div class="task-name">
+          <input type="text" class="form-control" placeholder="O que você ta fazendo?">
+        </div>
+        <div class="task-references">
+          <input id="input-tags" type="text" class="m-r-10">
+          <select class="form-control" id="project-select" style="width: 40%;">
+            <option>Projeto...</option>
+            <% @projects.each do |project| %>
+              <option><%= project.name %></option>
+            <% end %>
+          </select>
+        </div>
+        <div class="task-time">
+          <div id="billable">
+            <i class="mdi mdi-cash-usd"></i>
+          </div>
+          <div id="timer">
+            00:00:00
+          </div>
+          <div class="time-buttons">
+            <button id="start-button" type="button" onclick="startTimer()" class="btn btn-primary"><i class="fa fa-play"></i></button>
+            <button id="resume-button" type="button" onclick="resumeTimer()" class="btn btn-info btn-resume-pause"><i class="fa fa-play-circle"></i></button>
+            <button id="pause-button" type="button" onclick="pauseTimer()" class="btn btn-warning btn-resume-pause"><i class="fa fa-pause"></i></button>
+            <button id="stop-button" type="button" onclick="stopTimer()" class="btn btn-danger"><i class="fa fa-stop"></i></button>
+          </div>
+          <button type="button" class="btn btn-secondary" onclick="changeTimeEntry(true)"><i class="fa fa-calendar"></i></button>
+        </div>
+      </div>
+
+      <div class="time-entry-date">
+        <div class="task-name">
+          <input type="text" class="form-control" placeholder="O que você fez?">
+        </div>
+        <div class="task-references">
+          <input id="input-tags-2" type="text" class="m-r-10">
+          <select class="form-control" id="project-select" style="width: 40%;">
+            <option>Projeto...</option>
+            <% @projects.each do |project| %>
+              <option><%= project.name %></option>
+            <% end %>
+          </select>
+        </div>
+        <div class="task-time">
+          <div id="billable">
+            <i class="mdi mdi-cash-usd"></i>
+          </div>
+          <div id="date">
+            <input type="text" class="form-control" placeholder="Data" id="mdate">
+          </div>
+          <div class="time-buttons">
+            <button id="start-button" type="button" onclick="startTimer()" class="btn btn-primary"><i class="fa fa-save"></i></button>
+          </div>
+          <button type="button" class="btn btn-secondary" onclick="changeTimeEntry(false)"><i class="fa fa-clock-o"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+      $("#stop-button").hide();
+      $(".btn-resume-pause").hide();
+      //start a timer
+      function startTimer(){
+          $("#timer").timer({
+              format: '%H:%M:%S'
+          });
+          $("#stop-button").show();
+          $("#start-button").hide();
+          $(".btn-resume-pause").show();
+          $("#resume-button").hide();
+      }
+      function pauseTimer(){
+          $('#timer').timer('pause');
+          $("#resume-button").show();
+          $("#pause-button").hide();
+      }
+      function resumeTimer(){
+          $('#timer').timer('resume');
+          $("#pause-button").show();
+          $("#resume-button").hide();
+      }
+      function stopTimer() {
+          $('#timer').timer('remove');
+          console.log($('#timer').text());
+          $("#start-button").show();
+          $("#stop-button").hide();
+          $(".btn-resume-pause").hide();
+      }
+
+      function toggleClass() {
+      }
+  </script>
+
+  <script>
+      $('#input-tags-2').selectize({
+          delimiter: ',',
+          persist: false,
+          maxItems: 3,
+          placeholder: "Tags",
+          options: [
+              {value: "Sede"},
+              {value: "Projeto"},
+              {value: "Reunião"}
+          ],
+          render: {
+              item: function(item, escape) {
+                  return '<div>' +
+                      (item.value ? '<span class="label label-primary">' + escape(item.value ) + '</span>' : '') +
+                      '</div>';
+              },
+              option: function(item, escape) {
+                  var caption = item.value ? item.value : null;
+                  return '<div style="padding: 0.3em;">' +
+                      (caption ? '<span class="caption">' + escape(caption) + '</span>' : '') +
+                      '</div>';
+              }
+          },
+          create: function(input) {
+              return {
+                  value: input,
+                  text: input
+              }
+          }
+      });
+      $('#input-tags').selectize({
+          delimiter: ',',
+          persist: false,
+          maxItems: 3,
+          placeholder: "Tags",
+          options: [
+              {value: "Sede"},
+              {value: "Projeto"},
+              {value: "Reunião"}
+          ],
+          render: {
+              item: function(item, escape) {
+                  return '<div>' +
+                      (item.value ? '<span class="label label-primary">' + escape(item.value ) + '</span>' : '') +
+                      '</div>';
+              },
+              option: function(item, escape) {
+                  var caption = item.value ? item.value : null;
+                  return '<div style="padding: 0.3em;">' +
+                      (caption ? '<span class="caption">' + escape(caption) + '</span>' : '') +
+                      '</div>';
+              }
+          },
+          create: function(input) {
+              return {
+                  value: input,
+                  text: input
+              }
+          }
+      });
+  </script>
+
+  <script>
+    $(".time-entry-date").hide();
+    function changeTimeEntry(staticAdd) {
+        if(staticAdd){
+            $(".time-entry-date").show();
+            $(".time-entry").hide();
+        } else {
+            $(".time-entry-date").hide();
+            $(".time-entry").show();
+        }
+    }
+  </script>
+  <script>
+      $('#mdate').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
+  </script>
+<% end %>

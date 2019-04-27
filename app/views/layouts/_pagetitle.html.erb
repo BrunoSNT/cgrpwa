@@ -1,0 +1,20 @@
+<div class="row page-titles">
+  <div class="col-md-5 col-sm-12 align-self-center">
+    <h3 class="text-themecolor"><%= @page_title %></h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)"><%= @main_page %></a></li>
+      <li class="breadcrumb-item active"><%= @page_title %></li>
+    </ol>
+  </div>
+  <div class="col-md-7 col-sm-12 align-self-center">
+    <div class="d-flex justify-content-end">
+      <div class="d-flex m-r-20 m-l-10 hidden-md-down">
+        <div class="chart-text m-r-10" style="display: flex; align-items: center; vertical-align: center;">
+          <h4 class="m-t-0" style="position: relative; top: 0.4em; font-size: 21px; color: #274c8c; margin-right: 0.3em;">
+            $ <%= current_user.coins %></h4>
+          <%= image_tag "focoin.png", style: "height: 49px; width: 40px; object-fit: cover;" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<br>
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6 col-sm-12">
+    <div class="container">
+          <div class="card">
+            <div class="card-body">
+              <h1>Reembolso efetivado.</h1><hr>
+              <h5>Parabéns <%= @user.full_name %>, você está <%= number_to_currency(@extract.value) %> mais rico.</h5>
+              <img alt="Politica" src="https://media.giphy.com/media/5fBH6z8aMV1RbA4FaSc/giphy.gif" style="height: 15em; width: 100%; object-fit: cover;"/>
+            </div>
+          </div>
+          <br>
+          <div class="card" style="background-color: #b8efa5">
+            <div class="card-body">
+              <%= image_tag "logo_branca.png", style: "height: 6em; width: 7.5em; object-fit: cover; position: absolute; bottom: 0.3em; right: 0.3em;" %>
+              <h2 style="color: white;">Recibo para <%= @user.first_name %> <%= @user.last_name %></h2><hr>
+              <i class="fa fa-caret-down" style="position: absolute; bottom: 10px; right: 10px;"></i>
+              <div class="card-body">
+                <p style="color: white;"><%= @extract.description %></p><br>
+                <h3 style="font-weight: 500; color:#fff;">Valor: <%= number_to_currency(@extract.value) %></h3><br>
+              </div>
+            </div>
+          </div>
+          <br><br>
+      </div>
+    </div>
+  </div>
+</div>

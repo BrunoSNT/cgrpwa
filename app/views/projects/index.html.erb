@@ -1,0 +1,118 @@
+<div class="row m-t-40">
+  <div class="col-md-12">
+    <div style="display: flex; justify-content: space-between">
+      <h4 class="card-title">Projetos Atuais </h4>
+      <%= link_to 'Cadastrar Projeto', new_project_path, class: "btn btn-success" %>
+    </div>
+  </div>
+</div>
+<!-- Row -->
+<div class="card-columns el-element-overlay">
+  <% @current_projects.each do |project| %>
+    <div class="">
+      <div class="card">
+        <div class="el-card-item">
+          <div class="el-card-avatar el-overlay-1">
+            <% if project.avatar.attached? %>
+              <%= link_to project_path(project) do %>
+                <%= image_tag project.avatar, class: "image-project" %>
+              <% end %>
+            <% else %>
+                <%= link_to project_path(project), class: "image-popup-vertical-fit"  do %>
+                  <%= image_tag 'assets/images/big/img1.jpg', class: "image-project" %>
+              <% end %>
+            <% end %>      
+          </div>
+          <div class="el-card-content">
+            <h3 class="box-title"><%= project.name %></h3> <small>Até <%= project.enddate.strftime("%d/%m/%Y") %></small>
+            <br/>
+            <div class="m-l-10 m-r-10">
+              <span class="text-danger"> <%= percentageDone(project) %>%</span>
+              <div class="progress">
+                <div class="progress-bar bg-<%= project_color(project) %> active progress-bar-striped" role="progressbar" style="width: <%= percentageDone(project) %>%; height: 100%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="row m-t-40">
+  <div class="col-md-12">
+    <h4 class="card-title">Seus Projetos</h4>
+  </div>
+</div>
+
+<div class="card-columns el-element-overlay">
+  <% current_user.projects.each do |project| %>
+    <div class="">
+      <div class="card">
+        <div class="el-card-item">
+          <br>
+<!--          <div class="el-card-avatar el-overlay-1">-->
+            <%# if project.avatar.attached? %>
+              <%#= link_to project_path(project) do %>
+                <%#= image_tag project.avatar, class: "image-project" %>
+              <%# end %>
+            <%# else %>
+                <%#= link_to project_path(project), class: "image-popup-vertical-fit"  do %>
+                  <%#= image_tag 'assets/images/big/img1.jpg', class: "image-project"%>
+              <%# end %>
+            <%# end %>
+<!--          </div>-->
+          <div class="el-card-content">
+            <h3 class="box-title"><%= project.name %></h3> <small>Até <%= project.enddate.strftime("%d/%m/%Y") %></small>
+            <br/><br/>
+            <div class="m-l-10 m-r-10">
+              <span class="text-danger"> <%= percentageDone(project) %>%</span>
+              <div class="progress">
+                <div class="progress-bar bg-<%= project_color(project) %> active progress-bar-striped" role="progressbar" style="width: <%= percentageDone(project) %>%; height: 100%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="row m-t-40">
+  <div class="col-md-12">
+    <h4 class="card-title">Banco de Projetos</h4>
+  </div>
+</div>
+
+<div class="card-columns el-element-overlay">
+  <% @projects.each do |project| %>
+    <div class="">
+      <div class="card">
+        <div class="el-card-item">
+<!--          <div class="el-card-avatar el-overlay-1">-->
+            <%# if project.avatar.attached? %>
+              <%#= link_to project_path(project) do %>
+                <%#= image_tag project.avatar, class: "image-project" %>
+              <%# end %>
+            <%# else %>
+                <%#= link_to project_path(project), class: "image-popup-vertical-fit"  do %>
+                  <%#= image_tag 'assets/images/big/img1.jpg', class: "image-project"%>
+              <%# end %>
+            <%# end %>
+<!--          </div>-->
+          <div class="el-card-content">
+            <br>
+            <h3 class="box-title"><%= project.name %></h3> <small>Até <%= project.enddate.strftime("%d/%m/%Y") %></small>
+<!--            <br/>-->
+<!--            <div class="m-l-10 m-r-10">-->
+<!--              <span class="text-danger"> <%#= percentageDone(project) %>%</span>-->
+<!--              <div class="progress">-->
+<!--                <div class="progress-bar bg-danger active progress-bar-striped" role="progressbar" style="width: <%#= percentageDone(project) %>%; height: 100%;"></div>-->
+<!--              </div>-->
+<!--            </div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,35 @@
+<div class="card">
+  <div class="card-body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>
+            Nome
+          </th>
+          <th>
+            Descrição
+          </th>
+          <th>
+            Inicial
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <%= @core.name %>
+          </td>
+          <td>
+            <%= @core.description %>
+          </td>
+          <td>
+            <%= @core.initial %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= link_to 'Editar', edit_core_path(@core), class: "btn btn-warning" %>
+<%= link_to "Voltar", :back, class: "btn btn-primary" %>

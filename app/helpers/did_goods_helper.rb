@@ -1,0 +1,2 @@
+module DidGoodsHelper
+end

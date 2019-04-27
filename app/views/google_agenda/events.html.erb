@@ -1,0 +1,78 @@
+<!-- <ul>
+  <% @event_list.items.each do |event| %>
+  <li>
+    <%= event.summary %>
+    <%= event.id %>
+  </li>
+  <% end %>
+</ul> -->
+
+<!-- <% @event_list.items.each do |event| %>
+  <div class="list-group row">
+    <%= event.summary %>
+    <%= event.id %>
+  </div>
+<% end %> -->
+
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div id="calendar"></div>
+    </div>
+  </div>
+</div>
+
+<%= form_tag new_event_url do %>
+  <div class="row">
+    <div class="col-md-4">
+      <%= datetime_select(:start, params[:start], placeholder: 'Enter start date:', class: 'form-control')%>
+    </div>
+    <div class="col-md-4">
+      <%= datetime_select(:end, params[:end], placeholder: 'Enter end data:', class: 'form-control')%>
+    </div>
+    <div class="col-md-4">
+      <%= text_field_tag(:summary, params[:summary], placeholder: 'Enter Title:', class: 'form-control')%>
+    </div>
+    <div class="col-md-4">
+      <%= text_field_tag(:color_id, params[:color_id], placeholder: 'Enter color:', class: 'form-control')%>
+    </div>
+  </div> 
+  <br/>
+  <%= submit_tag 'Add event', class: 'btn btn-success' %>
+<% end %>
+
+<!-- <% events = [] %>
+  <% @event_list.items.each do |event| %>
+  <% unless event.start.nil? && event.end.nil? %>
+    <% unless event.start.date_time.nil? && event.end.date_time.nil? %>
+      <% events.push(title: 'event1', start: event.start.date_time.strftime("%Y-%m-%dT%H:%M:%S"), end: event.end.date_time) %>
+    <% end %>
+  <% end %>
+<% end %>
+<%= events %> -->
+  
+<script type='text/javascript'>
+  
+  $('#calendar').fullCalendar({
+    events: [
+      <% @event_list.items.each do |event| %>
+        <% unless event.start.nil? && event.end.nil? && event.summary.nil? %>
+          <% unless event.start.date_time.nil? && event.end.date_time.nil? %>
+            {
+              title: '<%= event.summary %>',
+              start: '<%= event.start.date_time.strftime("%Y-%m-%dT%H:%M:%S") %>',
+              end: '<%= event.end.date_time.strftime("%Y-%m-%dT%H:%M:%S") %>',
+              backgroundColor: 'green'
+            },
+          <% end %>
+        <% end %>
+      <% end %>
+    ],
+    eventLimit: false
+  });  
+</script>
+
+<%= javascript_include_tag "assets/plugins/calendar/jquery-ui.min.js" %>
+<%= javascript_include_tag "assets/plugins/moment/moment.js" %>
+<%= javascript_include_tag "assets/plugins/calendar/dist/fullcalendar.min.js" %>
+<%= javascript_include_tag "assets/plugins/calendar/dist/gcal.js" %>

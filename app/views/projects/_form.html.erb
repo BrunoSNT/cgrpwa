@@ -1,0 +1,184 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
+<!-- Row -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="m-b-0 text-white">Cadastrar novo Projeto</h4>
+      </div>
+      <div class="card-body">
+        <%= form_with(model: project, local: true) do |form| %>
+          <% if project.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+              <ul>
+                <% project.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <div class="form-body">
+            <h3 class="card-title">Cliente</h3>
+            <hr>
+            <div class="col-md-6">
+              <p>Cliente já cadastrado?
+              </p>
+              <div class="checkbox checkbox-success">
+                <input id="checkbox1" type="checkbox" onchange="attClientField(this)">
+                <label for="checkbox1"> Sim </label>
+              </div>
+            </div>
+            <div class="form-client">
+              <%= form.fields_for :client, Client.new do |client_form| %>
+                <div class="row p-t-20">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Nome</label>
+                      <%= client_form.text_field :name, class: "form-control" %>
+                    </div>
+                  </div>
+                  <!--/span-->
+                </div>
+                <div class="row p-t-20">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Email do Cliente</label>
+                      <%= client_form.email_field :client_email, class: "form-control" %>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Telefone</label>
+                      <%= client_form.text_field :phone, onkeypress: "mascara(this, '## #####-####')", maxlength:"13", class: "form-control phone", maxlength: 13 %>
+                    </div>
+                  </div>
+                  <!--/span-->
+                </div>
+                <div class="row p-t-20">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">CPF/CNPJ</label>
+                      <%= client_form.text_field :cpf, class: "form-control" %>
+                    </div>
+                  </div>
+                  <!--/span-->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Razão Social</label>
+                      <%= client_form.text_field :social_reason, class: "form-control" %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+
+            <div class="field-client-id" style="margin-bottom: 2em;">
+              <%= form.collection_select(:client_id, Client.all, :id, :name, { prompt: 'Cliente...' }, :class => 'form-control') %>
+            </div>
+            <h3 class="card-title">Equipe</h3>
+            <hr>
+            <div class="form-user">
+              <div id="user_projects">
+                <%= form.fields_for :user_projects do |team_form| %>
+                  <!-- COMENTÁRIO:
+                    é uma exigencia também que os campos do seu nested esteja numa partial "nome_do_seu_nested_no_singular_fields"
+                  -->
+                  <%= render 'user_project_fields', f: team_form %>
+                <% end %>
+                <div class="links">
+                  <!-- COMENTÁRIO: O link_to_add_association é um helper provido pela gem -->
+                  <%= link_to_add_association 'Adicionar Dev', form, :user_projects, class: 'btn btn-primary' %>
+                  <br><br>
+                </div>
+              </div>
+            </div>
+
+            <h3 class="card-title">Projeto</h3>
+            <hr>
+            <div class="form-group">
+              <%= form.label :nome %>
+              <%= form.text_field :name, class: "form-control", required: true %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label :descrição %>
+              <%= form.text_area :description, class: "form-control", required: true %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label :data_de_início %>
+              <%= form.date_field :start_date, class: "form-control", required: true %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label :data_prevista_de_fim %>
+              <%= form.date_field :enddate, class: "form-control", required: true %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label :preço %>
+              <%= form.text_field :price, value: number_to_currency(form.object.price.to_f, delimiter: '', unit: ''), step: :any, class: "form-control money", required: true %>
+            </div>
+
+            <div class="form-group">
+              <label>Imagem do Projeto</label>
+              <div>
+                <%= form.file_field :avatar, class: "dropify" %>
+              </div>
+            </div>
+
+            <div class="actions">
+              <%= form.submit "Enviar", class: "btn btn-success" %>
+            </div>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Row -->
+<script>
+    $('.money').mask("###0.00", {reverse: true});
+    $(".field-client-id").hide();
+
+    function attClientField(cb) {
+        if(cb.checked){
+            $(".field-client-id").show();
+            $(".form-client").hide();
+        } else {
+            $(".field-client-id").hide();
+            $(".form-client").show();
+        }
+    }
+
+</script>
+
+<script language="JavaScript">
+    /*
+    A função Mascara tera como valores no argumento os dados inseridos no input (ou no evento onkeypress)
+    onkeypress="mascara(this, '## ####-####')"
+    onkeypress = chama uma função quando uma tecla é pressionada, no exemplo acima, chama a função mascara e define os valores do argumento na função
+    O primeiro valor é o this, é o Apontador/Indicador da Mascara, o '## ####-####' é o modelo / formato da mascara
+    no exemplo acima o # indica os números, e o - (hifen) o caracter que será inserido entre os números, ou seja, no exemplo acima o telefone ficara assim: 11-4000-3562
+    para o celular de são paulo o modelo deverá ser assim: '## #####-####' [11 98563-1254]
+    para o RG '##.###.###.# [40.123.456.7]
+    para o CPF '###.###.###.##' [789.456.123.10]
+    Ou seja esta mascara tem como objetivo inserir o hifen ou espaço automáticamente quando o usuário inserir o número do celular, cpf, rg, etc
+
+    lembrando que o hifen ou qualquer outro caracter é contado tambem, como: 11-4561-6543 temos 10 números e 2 hifens, por isso o valor de maxlength será 12
+    <input type="text" name="telefone" onkeypress="mascara(this, '## ####-####')" maxlength="12">
+    neste código não é possivel inserir () ou [], apenas . (ponto), - (hifén) ou espaço
+    */
+
+    function mascara(t, mask){
+        var i = t.value.length;
+        var saida = mask.substring(1,0);
+        var texto = mask.substring(i)
+        if (texto.substring(0,1) != saida){
+            t.value += texto.substring(0,1);
+        }
+    }
+</script>

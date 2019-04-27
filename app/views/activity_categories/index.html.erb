@@ -1,0 +1,93 @@
+<h1>Categorias</h1>
+
+<div class="card">
+  <div class="card-body">
+    <table class="table table-hover" id="categories-table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Valor do Dono</th>
+          <th>Valor do Participante</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @activity_categories.each do |category| %>
+          <tr>
+            <td><%= category.name %></td>
+            <td><%= category.owner_value %></td>
+            <td><%= category.member_value %></td>
+            <td><%= link_to 'Ver', category, class: "btn btn-info" %></td>
+            <td><%= link_to 'Editar', edit_activity_category_path(category), class: "btn btn-warning" %></td>
+            <td><%= link_to "<i class='fa fa-trash'></i>".html_safe, category, method: :delete, data: { confirm: 'Tem certeza?' }, class: "btn btn-danger" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+<%= link_to 'Criar categoria', new_activity_category_path, class: "btn btn-success", style:"margin-bottom:2em;" %>
+
+<h1>Atividades</h1>
+
+<div class="card">
+  <div class="card-body">
+    <table class="table table-hover" id="activities-table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Categoria</th>
+          <th>Dono</th>
+          <th>Status</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @activities.each do |activity| %>
+          <tr>
+            <td><%= activity.name %></td>
+            <td><%= activity.activity_category.name %></td>
+            <td><%= activity.user.full_name %></td>
+            <td><%= activity.status %></td>
+            <td><%= link_to 'Ver', activity, class: "btn btn-info" %></td>
+            <td><%= link_to 'Editar', edit_activity_path(activity), class: "btn btn-warning" %></td>
+            <td><%= link_to "<i class='fa fa-trash'></i>".html_safe, activity, method: :delete, data: { confirm: 'Tem certeza?' }, class: "btn btn-danger" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<br>
+<script>
+    $(document).ready( function () {
+        $('#activities-table').DataTable(
+            {
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "Nada encontrado",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "Nenhuma data encontrada",
+                    "infoFiltered": "(filtrando _MAX_ de um total de registros)",
+                    "paginate": {
+                        "previous": "Anterior",
+                        "next": "Próxima",
+                    },
+                    "search": "Procurar"
+                }
+            }
+        );
+    } );
+</script>
+
+<%= link_to 'Criar atividade', new_activity_path, class: "btn btn-success" %>

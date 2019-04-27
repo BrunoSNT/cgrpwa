@@ -1,0 +1,32 @@
+<%= form_with(model: core, local: true, html: { class: "form-material", id: ""}) do |form| %>
+  <% if core.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(core.errors.count, "error") %> prohibited this core from being saved:</h2>
+
+      <ul>
+      <% core.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :nome %>
+    <%= form.text_field :name, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :descrição %>
+    <%= form.text_area :description, class: "form-control", style: "min-height: 4em;" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :inicial %>
+    <%= form.text_field :initial, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Enviar", class: "btn btn-block btn-success" %>
+  </div>
+<% end %>

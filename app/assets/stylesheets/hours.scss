@@ -1,0 +1,52 @@
+// Place all the styles related to the hours controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+::placeholder {
+  color: #e0e0e0 !important;
+}
+
+.selectize-control{
+  width: 60%;
+}
+
+.time-buttons{
+  margin-right: 0.5em;
+}
+
+.time-entry{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.time-entry-date{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.task-name{
+  width: 50%;
+}
+
+.task-time{
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  > div{
+    margin-left: 0.5em;
+  }
+}
+
+.task-references{
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  > div{
+    margin-left: 0.5em;
+  }
+}

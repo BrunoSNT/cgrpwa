@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <% if @quote.image.attached? %>
+        <%= image_tag @quote.image, style: "width: 200px; height: 200px; object-fit: cover;" %>
+        <% end %>
+        <%= @quote.name %><br>
+        <%= @quote.description %><br>
+        <%= @quote.value %><br>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to 'Editar', edit_quote_path(@quote), class: "btn btn-warning" %> |
+<%= link_to 'Voltar', quotes_path, class: "btn btn-success" %>

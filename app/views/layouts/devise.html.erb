@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CGR</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <%= stylesheet_link_tag "assets/plugins/toast-master/css/jquery.toast.css" %>
+  <%= stylesheet_link_tag "css/style.css" %>
+  <%= stylesheet_link_tag "scss/colors/green" %>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+</head>
+
+<body>
+  <div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
+  </div>
+  <% flash.each do |key, value| %>
+    <% if key == 'alert' %>
+      <% key = 'danger' %>
+    <% end %>
+    <div class="alert alert-<%= key %>" style="position: absolute; top: 20px; left: 20px; z-index: 999;"> <%= value %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true" style="margin-left: 5px;"> &times;</span> </button>
+    </div>
+  <% end %>
+  <%= yield %>
+  <%= javascript_include_tag "assets/plugins/bootstrap/js/popper.min.js" %>
+  <%= javascript_include_tag "js/jquery.slimscroll.js" %>
+  <%= javascript_include_tag "js/waves.js" %>
+  <%= javascript_include_tag "js/sidebarmenu.js" %>
+  <%= javascript_include_tag "assets/plugins/sticky-kit-master/dist/sticky-kit.min.js" %>
+  <%= javascript_include_tag "assets/plugins/sparkline/jquery.sparkline.min.js" %>
+  <%= javascript_include_tag "js/custom.min.js" %>
+  <%= javascript_include_tag "assets/plugins/styleswitcher/jQuery.style.switcher.js" %>
+</body>
+</html>

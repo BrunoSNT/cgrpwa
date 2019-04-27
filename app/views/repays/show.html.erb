@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @repay.user %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @repay.description %>
+</p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @repay.value %>
+</p>
+
+<p>
+  <strong>Kind:</strong>
+  <%= @repay.kind %>
+</p>
+
+<%= link_to 'Edit', edit_repay_path(@repay) %> |
+<%= link_to 'Back', repays_path %>

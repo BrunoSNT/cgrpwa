@@ -1,0 +1,37 @@
+<%= form_with(model: setup, local: true) do |form| %>
+  <% if setup.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(setup.errors.count, "error") %> prohibited this setup from being saved:</h2>
+
+      <ul>
+      <% setup.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :horas_semanais %>
+    <%= form.number_field :weekly_hours, class: "form-control", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :preço_supermandoubem %>
+    <%= form.number_field :superdidgood_price, class: "form-control", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :porcentagem_poltica_devs %>
+    <%= form.number_field :devs_percentage, class: "form-control", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :porcentagem_poltica_negs %>
+    <%= form.number_field :negs_percentage, class: "form-control", required: true %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Enviar", class: "btn btn-primary" %>
+  </div>
+<% end %>

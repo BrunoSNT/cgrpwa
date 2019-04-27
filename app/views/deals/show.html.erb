@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Deal date:</strong>
+  <%= @deal.deal_date %>
+</p>
+
+<p>
+  <strong>Client name:</strong>
+  <%= @deal.client_name %>
+</p>
+
+<p>
+  <strong>Client company:</strong>
+  <%= @deal.client_company %>
+</p>
+
+<p>
+  <strong>Sector:</strong>
+  <%= @deal.sector %>
+</p>
+
+<p>
+  <strong>Sector description:</strong>
+  <%= @deal.sector_description %>
+</p>
+
+<p>
+  <strong>Problems:</strong>
+  <%= @deal.problems %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @deal.address %>
+</p>
+
+<p>
+  <strong>Website:</strong>
+  <%= @deal.website %>
+</p>
+
+<p>
+  <strong>Telephone1:</strong>
+  <%= @deal.telephone1 %>
+</p>
+
+<p>
+  <strong>Telephone2:</strong>
+  <%= @deal.telephone2 %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @deal.email %>
+</p>
+
+<p>
+  <strong>Info:</strong>
+  <%= @deal.info %>
+</p>
+
+<p>
+  <strong>Arrival:</strong>
+  <%= @deal.arrival %>
+</p>
+
+<%= link_to 'Edit', edit_deal_path(@deal) %> |
+<%= link_to 'Back', deals_path %>

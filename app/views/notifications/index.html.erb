@@ -1,0 +1,23 @@
+<div class="card">
+  <div class="card-body">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Título</th>
+        <th>Mensagem</th>
+        <th>Tipo</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @notifications.each do |notification| %>
+        <tr>
+          <td><%= notification.title %></td>
+          <td><%= notification.message %></td>
+          <td><%= notification.kind %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

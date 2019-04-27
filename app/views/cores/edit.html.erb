@@ -1,0 +1,12 @@
+
+<div class="row justify-content-md-center">
+  <div class="card col-md-6">
+    <div class="card-body">
+      <%= render 'form', core: @core %>
+    </div>
+  </div>
+</div>
+<div class="row justify-content-md-center">
+  <%= link_to 'Ver', @core, class: "btn btn-info" %>
+  <%= link_to "Voltar", cores_path, class: "btn btn-primary" %>
+</div>

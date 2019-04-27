@@ -1,0 +1,47 @@
+<h1>Próximas Atividades</h1>
+<hr>
+<%= render 'user_activities/form', user_activity: @user_activity %>
+<h1>Atividades Inscritas</h1>
+<hr>
+<div class="row">
+<% current_user.user_activities_subscriptions.each do |activity| %>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="el-card-item">
+            <div class="el-card-content">
+              <h3 class="box-title"><%= activity.name.truncate(25) %></h3>
+              <% if activity.activity_date %>
+                <h6><%= activity.activity_date.strftime("%d/%m/%Y %H:%M") %></h6>
+              <% end %>
+            </div>
+            <%= link_to "Desinscrever-se", user_activity_path(UserActivity.find_user_activity_by_user(current_user, activity).id), method: :delete, data: { confirm: 'Tem certeza?' }, class: "btn btn-block btn-danger" %>
+          </div>
+        </div>
+      </div>
+    </div>
+<% end %>
+</div>
+<h1>Suas Atividades</h1>
+<hr>
+<div class="row">
+  <% current_user.activities.each do |activity| %>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="el-card-item">
+            <div class="el-card-content">
+              <h3 class="box-title"><%= activity.name.truncate(25) %></h3>
+              <% if activity.activity_date %>
+                <h6><%= activity.activity_date.strftime("%d/%m/%Y %H:%M") %></h6>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+<%= link_to 'Voltar', user_activities_path,  class: "btn btn-primary" %>
+
+<%= link_to 'Nova Atividade', new_activity_path, class: "btn btn-success" %>

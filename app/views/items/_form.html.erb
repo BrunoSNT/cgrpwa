@@ -1,0 +1,42 @@
+<%= form_with(model: item, local: true, html: { class: "form-material", id: ""}) do |form| %>
+  <% if item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+      <% item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :imagem %><br>
+    <%= form.file_field :image %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :nome %>
+    <%= form.text_field :name, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :descrição %>
+    <%= form.text_area :description, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :valor %>
+    <%= form.number_field :value, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :quantidade %>
+    <%= form.number_field :quantity, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Enviar", class: "btn btn-success" %>
+  </div>
+<% end %>

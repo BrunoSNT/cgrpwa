@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @extract.user %>
+</p>
+
+<p>
+  <strong>Kind:</strong>
+  <%= @extract.kind %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @extract.description %>
+</p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @extract.value %>
+</p>
+
+<%= link_to 'Edit', edit_extract_path(@extract) %> |
+<%= link_to 'Back', extracts_path %>

@@ -1,0 +1,43 @@
+<div class="card">
+  <div class="card-body">
+    <table class="table table-hover" id="itens-table">
+      <thead>
+        <tr>
+          <th>Orçamento</th>
+          <th>Descrição</th>
+          <th>Valor</th>
+          <th>Imagem</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @quotes.each do |quote| %>
+        <tr>
+          <td><%= quote.name %></td>
+          <td><%= quote.description %></td>
+          <td><%= quote.value %></td>
+          <% if quote.image.attached? %>
+          <td>
+            <%= image_tag quote.image, style: "height: 80px; width: 150px; object-fit: cover;" %>
+          </td>
+          <% else %>
+          <td>
+            <%= image_tag "assets/images/big/img1.jpg", style: "height: 80px; width: 150px; object-fit: cover;" %>
+          </td>
+          <% end %>
+          <td><%= link_to 'Ver', quote, class: "btn btn-info" %></td>
+          <td><%= link_to 'Editar', edit_quote_path(quote), class: "btn btn-warning" %></td>
+          <td>
+            <%= link_to 'Deletar', quote, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= link_to 'Novo Orçamento', new_quote_path, class: "btn btn-success" %>

@@ -1,0 +1,114 @@
+<%= javascript_include_tag "jkanban.js" %>
+<%= stylesheet_link_tag "jkanban.css" %>
+
+<div id="myKanban"></div>
+<div class="modal fade modal-xl" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel1">Reembolso</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div id="modalContent">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to 'Novo Reembolso', new_repay_path,  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#exampleModal', class: "btn btn-success" } %>
+
+
+<% array_colors = ['info','error','success2','success','primary'] %>
+<script>
+    var KanbanTest = new jKanban({
+        element: '#myKanban',
+        gutter: '10px',
+        widthBoard: '258px',
+        click: function (el) {
+            console.log("Trigger on all items click!");
+        },
+        dropEl: function (el, target) {
+            $.get( "update_repay_status"+'/'+el.dataset.eid+'/'+target.parentElement.dataset.id, function( data ) {
+                alert( "Pagamento movido com sucesso.");
+            });
+        },
+        // buttonClick: function (el, boardId) {
+        //     console.log(el);
+        //     console.log(boardId);
+        //     // create a form to enter element
+        //     var formItem = document.createElement('form');
+        //     formItem.setAttribute("class", "itemform");
+        //     formItem.innerHTML = '<div class="form-group"><textarea class="form-control" rows="2" autofocus></textarea></div><div class="form-group"><button type="submit" class="btn btn-primary btn-xs pull-right">Enviar</button><button type="button" id="CancelBtn" class="btn btn-default btn-xs pull-right">Cancel</button></div>'
+        //     KanbanTest.addForm(boardId, formItem);
+        //     formItem.addEventListener("submit", function (e) {
+        //         e.preventDefault();
+        //         var text = e.target[0].value
+        //         KanbanTest.addElement(boardId, {
+        //             "title": text,
+        //         })
+        //         formItem.parentNode.removeChild(formItem);
+        //     });
+        //     document.getElementById('CancelBtn').onclick = function () {
+        //         formItem.parentNode.removeChild(formItem)
+        //     }
+        // },
+        addItemButton: false,
+        boards: [
+            <% @repay_status.each_with_index do |repay,idx| %>
+            {
+                "id": '<%= repay[0] %>',
+                "title": '<%= repay[0].humanize %>',
+                "class": "<%= array_colors[idx] %>,good",
+                <!--                "dragTo": ['<%= @repay_status.to_a[idx+1].nil? ? "_" :  @repay_status.to_a[idx+1][0] %>', '<%= @repay_status.to_a[idx-1].nil? ? "_" :  @repay_status.to_a[idx-1][0] %>'],-->
+                "item": [
+                    <% repays_by_status(repay).each do |pay| %>
+                    {
+                        "id": '<%= pay.id %>',
+                        "title": '<div style="display:flex;"><% if pay.user.avatar.attached? %>\n' +
+                            '              <%= image_tag pay.user.avatar, class: "profile-pic" %>\n' +
+                            '            <% else %>\n' +
+                            '              <%= image_tag "assets/images/users/focatia.jpg", class: "img-circle", style: "object-fit: cover; width: 50px; height: 50px;" %>\n' +
+                            '            <% end %><h4 class="m-l-15 m-t-5"><%= pay.user.full_name %><br><span style="font-size: 13px; color: gray;"><%= pay.created_at.strftime("%d/%m") %></span></h4></span></div><p style="font-size: 18px; font-weight: 300; margin-top: 0.5em;"><%= pay.description %></p><br><p><%= number_to_currency(pay.value) %></p>',
+                        "drag": function (el, source) {
+                            console.log("START DRAG: " + el.dataset.eid);
+                        },
+                        "dragend": function (el) {
+                            console.log("END DRAG: " + el.dataset.eid);
+                        },
+                        "drop": function(el, source){
+                        },
+                        "click": function (el) {
+                            <% if current_user.id == pay.user.id%>
+                              $("#modalContent").html("<%= escape_javascript(render 'repays/form', repay: pay) %>");
+                            <% else %>
+                              $("#modalContent").html("<%= escape_javascript(render 'repays/repay_info', repay: pay) %>");
+                            <% end %>
+                            $("#exampleModal").modal()
+                        },
+                    },
+                    <% end %>
+                ]
+            },
+            <% end %>
+        ]
+    });
+    var toDoButton = document.getElementById('addToDo');
+    toDoButton.addEventListener('click', function () {
+        KanbanTest.addElement(
+            "_todo",
+            {
+                "title": "Test Add",
+            }
+        );
+    });
+    var removeElement = document.getElementById('removeElement');
+    removeElement.addEventListener('click', function () {
+        KanbanTest.removeElement('_test_delete');
+    });
+    var allEle = KanbanTest.getBoardElements('_todo');
+    allEle.forEach(function (item, index) {
+        //console.log(item);
+    })
+</script>

@@ -1,0 +1,40 @@
+ <div class="actions">
+    <div class="row">
+      <% @activities.each do |activity| %>
+          <% unless current_user.user_activities_subscriptions.include?(activity) %>
+            <div class="col-md-4">
+              <div class="card">
+                <%= form_with(model: user_activity, local: true) do |form| %>
+                  <% if user_activity.errors.any? %>
+                    <div id="error_explanation">
+                      <h2><%= pluralize(user_activity.errors.count, "error") %> prohibited this user_activity from being saved:</h2>
+                      <ul>
+                        <% user_activity.errors.full_messages.each do |message| %>
+                          <li><%= message %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  <% end %>
+                <div class="card-body">
+                  <div class="el-card-item">
+                    <div class="el-card-content">
+                      <h3 class="box-title"><%= activity.name.truncate(25) %></h3>
+                      <% if activity.activity_date %>
+                        <h6><%= activity.activity_date.strftime("%d/%m/%Y %H:%M") %></h6>
+                      <% end %>
+                      <% if activity.avatar.attached? %>
+                        <%= image_tag activity.avatar, class: "", style: "width: 100%; height: 15em; object-fit: cover;" %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <br>
+                  <%= form.hidden_field :activity_id, :value => activity.id %>
+                  <%= form.submit "Se inscrever na atividade", data: { confirm: 'Tem certeza?' }, class: "btn btn-block btn-primary" %>
+                </div>
+                <% end %>
+              </div>
+            </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>

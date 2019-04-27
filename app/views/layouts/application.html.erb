@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CGR</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <%= favicon_link_tag "assets/images/favicon.ico" %>
+    <%= stylesheet_link_tag "assets/plugins/css-chart/css-chart.css" %>
+    <%= stylesheet_link_tag "assets/plugins/chartist-js/dist/chartist.min.css" %>
+    <%= stylesheet_link_tag "assets/plugins/chartist-js/dist/chartist-init.css" %>
+    <%= stylesheet_link_tag "assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" %>
+    <%= stylesheet_link_tag "assets/plugins/calendar/dist/fullcalendar.css" %>
+    <%= stylesheet_link_tag "assets/plugins/c3-master/c3.min.css" %>
+    <%= stylesheet_link_tag "css/style.css" %>
+    <%= stylesheet_link_tag "scss/colors/green" %>
+    <%= stylesheet_link_tag "css/spinners.css" %>
+    <%= stylesheet_link_tag "css/animate.css" %>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+  <link rel="manifest" href="/manifest.json" />
+<meta name="apple-mobile-web-app-capable" content="yes"></head>
+
+  <body class="fix-header fix-sidebar card-no-border">
+    <div id="main-wrapper">
+      <%= render 'layouts/navbar' %>
+      <%= render 'layouts/sidebar' %>
+      <% flash.each do |key, value| %>
+        <% if key == 'alert' %>
+          <% key = 'danger' %>
+        <% elsif key == 'notice' %>
+          <% key = 'success' %>
+        <% end %>
+        <div class="alert alert-<%= key %>" style="position: absolute; top: 20px; left: 20px; z-index: 999;"> <%= value %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true" style="margin-left: 5px;"> &times;</span> </button>
+        </div>
+      <% end %>
+      <div class="page-wrapper">
+        <div class="container-fluid">
+          <%= render 'layouts/pagetitle' %>
+          <%= yield %>
+        </div>
+        <%= render 'layouts/footer' %>
+      </div>
+    </div>
+    <%= javascript_include_tag "assets/plugins/bootstrap/js/popper.min.js" %>
+    <%= javascript_include_tag "js/jquery.slimscroll.js" %>
+    <%= javascript_include_tag "js/waves.js" %>
+    <%= javascript_include_tag "js/sidebarmenu.js" %>
+    <%= javascript_include_tag "assets/plugins/sticky-kit-master/dist/sticky-kit.min.js" %>
+    <%= javascript_include_tag "assets/plugins/sparkline/jquery.sparkline.min.js" %>
+    <%= javascript_include_tag "js/custom.min.js" %>
+    <%= javascript_include_tag "assets/plugins/datatables/jquery.dataTables.min.js" %>
+    <%= javascript_include_tag "assets/plugins/chartist-js/dist/chartist.min.js" %>
+    <%= javascript_include_tag "assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js" %>
+    <%= javascript_include_tag "assets/plugins/d3/d3.min.js" %>
+    <%= javascript_include_tag "assets/plugins/c3-master/c3.min.js" %>
+    <%= javascript_include_tag "js/dashboard1.js" %>
+    <%= javascript_include_tag "assets/plugins/styleswitcher/jQuery.style.switcher.js" %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
+  </body>
+</html>

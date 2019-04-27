@@ -1,0 +1,41 @@
+<br>
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8 col-sm-12">
+    <div class="container">
+      <div class="card">
+        <div class="card-body">
+          <h4>Prezado Sr.(a) <strong><%= @client.name %></strong>,</h4>
+          <p>CNPJ/CPF: <strong><%= @client.cpf %></strong></p>
+
+          <p>Informamos que o pagamento referente ao projeto <strong><%= @project.name %></strong> está em aberto, com vencimento em <strong><%= @payment.payment_date.strftime("%d/%m/%Y") %></strong>.</p>
+
+          <p>O valor da parcela é de <strong><%= number_to_currency(@payment.value) %></strong>. Seguem os dados bancários da conta:<br><br>
+          - Banco: <strong>Banco do Brasil</strong><br>
+          - Conta corrente: <strong>24924-6</strong><br>
+          - Agência: <strong>3603-X</strong><br>
+          - CNPJ: <strong>03.632.310/0001-17</strong><br><br>
+
+            Solicitamos que entre em contato conosco para regularização do débito.<br>
+
+          Caso o pagamento já tenha sido efetuado, por favor desconsidere este aviso e encaminhe o comprovante de pagamento para o e-mail: <strong>noe@cjr.org.br</strong><br>
+
+          Cordialmente,<br><br>
+
+          Nicholas Nishimoto Marques<br>
+          Líder de Organização Empresarial<br>
+          +55 (61) 98233-2181<br>
+          ________________________________<br>
+
+          CJR - Empresa Júnior de Computação<br>
+          www.cjr.org.br | facebook<br><br>
+
+          Grato pela atenção.</p>
+
+          <%= image_tag "cjr_logo.png", style: "height: 3.2em; width: 5.2em; object-fit: cover; position: absolute; bottom: 15px; right: 15px;" %>
+        </div>
+      </div>
+      <br>
+    </div>
+  </div>
+</div>

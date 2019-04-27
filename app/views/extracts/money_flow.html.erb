@@ -1,0 +1,154 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+        <div class="col-md-12">
+            <canvas id="repay" width="300" height="400"></canvas>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-7">
+        <canvas id="cashflux" width="240" height="300"></canvas>
+      </div>
+      <div class="col-md-5 my-auto">
+        <h2>Total de politica de beneficio <br> <span class="text-danger"><%= number_to_currency @exit_benefits %></span> </h2>
+        <h2>Pedido de politica de beneficio <br> <span class="text-danger"><%= number_to_currency @exit %></span> </h2>
+        <h2>Projetos a serem recebidos <br> <span class="text-success"><%= number_to_currency @entry %></h2>
+        <h2>Estimativa de Caixa <br> <span class="text-primary"><%= number_to_currency(@entry - @exit) %></h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    document.addEventListener("turbolinks:load", function() {
+        let repays = [];
+        let pays = [];
+
+        <% Repay.where(status: "pago").group_by_month(:payment_date, format: "%Y-%m-%d").sum(:value).each do |key, value| %>
+        repays.push({x:'<%= key %>', y: <%= value %> });
+        <% end %>
+        <% Payment.where(status: "pago").group_by_month(:payment_date, format: "%Y-%m-%d").sum(:value).each do |key, value| %>
+        pays.push({t:'<%= key %>', y: <%= value %> });
+        <% end %>
+        var ctx = document.getElementById("repay").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                datasets: [{
+                    label: 'Reembolsos por mês',
+                    type: 'bar',
+                    data: repays,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1,
+                    unite: null,
+                },{
+                    label: 'Pagamento por mês',
+                    data: pays,
+                    type: 'bar',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                    unite: null,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        time: {
+                            unit: 'month',
+                            displayFormats: {
+                                month: 'MMMM YYYY'
+                            }
+                        },
+                        offset: true
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            userCallback: function(value, index, values) {
+                                // Convert the number to a string and splite the string every 3 charaters from the end
+                                value = value.toString();
+                                value = value.split(/(?=(?:...)*$)/);
+
+                                // Convert the array to a string and format the output
+                                value = value.join('.');
+                                return 'R$ ' + value;
+                            },
+                        }
+                    }]
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("turbolinks:load", function() {
+        var ctx = document.getElementById('cashflux').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Total de Política', 'Total Pedido', 'Parcelas a Receber', 'Estimativa de Caixa'],
+                datasets: [{
+                    label: 'Valor',
+                    data: [<%= @exit_benefits %>, <%= @exit %>, <%= @entry %>, <%= @entry - @exit %>],
+                    backgroundColor: [
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            // Return an empty string to draw the tick line but hide the tick label
+                            // Return `null` or `undefined` to hide the tick line entirely
+                            userCallback: function(value, index, values) {
+                                // Convert the number to a string and splite the string every 3 charaters from the end
+                                console.log(value,index,values)
+                                value = value.toString();
+                                value = value.split(/(?=(?:...)*$)/);
+
+                                // Convert the array to a string and format the output
+                                value = value.join('.');
+                                return 'R$ ' + value;
+                            },
+                        }
+                    }],
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                                return tooltipItem.yLabel;
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>

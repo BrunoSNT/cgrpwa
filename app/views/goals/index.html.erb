@@ -1,0 +1,44 @@
+<div class="row">
+  <% @goals.each do |goal| %>
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title"><%= goal.name %></h4>
+          <!--      <div>-->
+          <!--        <canvas id="chart2" height="150"></canvas>-->
+          <!--      </div>-->
+          <canvas id="myChart<%= goal.id %>" width="240" height="240"></canvas>
+          <script>
+              var ctx = document.getElementById("myChart<%= goal.id %>").getContext('2d');
+              var myChart = new Chart(ctx, {
+                  type: 'doughnut',
+                  data: {
+                      labels: ["Restante", "Feito"],
+                      datasets: [{
+                          label: '# of Votes',
+                          data: [<%= goal.value - goal.achieved_goal %>, <%= goal.achieved_goal %>],
+                          backgroundColor: [
+                              '#d35643',
+                              '#56a56c'
+                          ],
+                          borderColor: [
+                              '#d35643',
+                              '#56a56c'
+                          ],
+                          borderWidth: 1
+                      }]
+                  },
+                  options: {
+                      scaleLabel: {
+                          padding: 20,
+                      }
+                  }
+              });
+          </script>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= link_to 'Nova Meta', new_goal_path, class: "btn btn-success" %>

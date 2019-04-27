@@ -1,0 +1,16 @@
+<div class="row">
+  <% @negotiations.each do |negociation| %>
+    <div class="col-lg-4 col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-row">
+            <div class="round align-self-center round-primary"><i class="ti-wallet"></i></div>
+            <div class="m-l-10 align-self-center">
+              <h3 class="m-b-0"><%= number_to_currency(negociation.project.price) %></h3>
+              <h5 class="text-muted m-b-0"><%= negociation.project.name %></h5></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

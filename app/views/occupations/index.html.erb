@@ -1,0 +1,27 @@
+<div class="card">
+  <div class="card-body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Descrição</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @occupations.each do |occupation| %>
+          <tr>
+            <td><%= occupation.name %></td>
+            <td><%= occupation.description %></td>
+            <td><%= link_to 'Ver', occupation, class: "btn btn-info" %></td>
+            <td><%= link_to 'Editar', edit_occupation_path(occupation), class: "btn btn-warning" %></td>
+            <td><%= link_to "<i class='fa fa-trash'></i>".html_safe, occupation, method: :delete, data: { confirm: 'Tem certeza?' }, class: "btn btn-danger" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= link_to 'Criar cargo', new_occupation_path, class: "btn btn-success" %>

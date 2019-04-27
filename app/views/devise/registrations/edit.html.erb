@@ -1,0 +1,338 @@
+<style>
+  .container-this {
+    position: relative;
+    width: 50%;
+  }
+
+  .image-this {
+    opacity: 1;
+    display: block;
+    width: 8em;
+    height: 8em;
+    object-fit: cover;
+    transition: .5s ease;
+    backface-visibility: hidden;
+  }
+
+  .middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .container-this:hover .image-this {
+    opacity: 0.3;
+    cursor: pointer;
+  }
+
+  .container-this:hover .middle {
+    opacity: 1;
+  }
+
+  .text {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    padding: 16px 32px;
+  }
+
+
+  .img-card-size {
+    width: 15rem !important; 
+    height: 100% !important;
+    object-fit: cover;
+  }
+
+  
+</style>
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-lg-4 col-xlg-3 col-md-5">
+    <div class="card">
+      <div class="card-body">
+        <center class="m-t-30">
+          <div class="container-this">
+            <% if current_user.avatar.attached? %>
+              <%= image_tag current_user.avatar, class:"img-circle image-this" %>
+            <% else %>
+              <%= image_tag "assets/images/users/focatia.jpg", class:"img-circle image-this" %>
+            <% end %>
+            <div class="middle">
+              <i class="mdi mdi-camera-enhance"></i>
+            </div>
+          </div>
+          <h4 class="card-title m-t-10"><%= current_user.full_name %></h4>
+          <h6 class="card-subtitle"><%= current_user.main_occupation %></h6>
+          <div class="row text-center justify-content-md-center">
+            <div class="col-4"><a href="javascript:void(0)" class="link"><i class="fa fa-clock-o"></i> <font class="font-medium"><%= clockify_friendly_hour_just_hour(JSON.parse(current_user.total_lifetime)["totalTime"]) %></font></a></div>
+            <div class="col-4"><a href="javascript:void(0)" class="link"><i class="fa fa-file-archive-o"></i> <font class="font-medium"><%= @user_projects %></font></a></div>
+          </div>
+        </center>
+      </div>
+      <div>
+        <hr> </div>
+      <div class="card-body"> <small class="text-muted">Email</small>
+        <h6><%= current_user.email %></h6> <small class="text-muted p-t-30 db">Telefone</small>
+        <h6><%= current_user.phone %></h6> <br>
+        <a href="https://www.github.com" target="_blank" class="btn btn-circle btn-secondary"><i class="fa fa-github"></i></a>
+      </div>
+    </div>
+  </div>
+  <!-- Column -->
+  <!-- Column -->
+  <div class="col-lg-8 col-xlg-9 col-md-7">
+    <div class="card">
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs profile-tab" role="tablist">
+        <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home" role="tab">Timeline</a> </li>
+        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Perfil</a> </li>
+        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab">Editar</a> </li>
+        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#projects" role="tab">Projetos</a> </li>
+        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#activities" role="tab">Atividades</a> </li>
+      </ul>
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div class="tab-pane tab-max-height active" id="home" role="tabpanel">
+          <div class="card-body">
+            <div class="profiletimeline">
+              <% if @entries['timeEntriesList'] != nil %>
+              
+                <% @entries['timeEntriesList'].each do |entrie| %>
+                  <div class="sl-item">
+                    <div class="sl-left">
+                      <p><%= clockify_friendly_hour(entrie['timeInterval']['duration']) %></p>
+                    </div>
+                    <div class="sl-right">
+                      <div><a href="#" class="link"><%= current_user.full_name %></a>
+                        <span class="sl-date">
+                          <%= distance_of_time_in_words(entrie['timeInterval']['start'], Time.now) %>
+                        </span>
+                        <p><%= entrie['description'] %></p>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+                <% end %>
+              <% else %>
+                <div class="sl-item">
+                  <p>Insira a chave da API do pipefy para atualizar a Timeline.</p>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <!--second tab-->
+        <div class="tab-pane" id="profile" role="tabpanel">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4 col-xs-6 b-r"> <strong>Nome</strong>
+                <br>
+                <p class="text-muted"><%= current_user.full_name %></p>
+              </div>
+              <div class="col-md-4 col-xs-6 b-r"> <strong>Telefone</strong>
+                <br>
+                <p class="text-muted"><%= current_user.phone %></p>
+              </div>
+              <div class="col-md-4 col-xs-6 b-r"> <strong>Email</strong>
+                <br>
+                <p class="text-muted"><%= current_user.email %></p>
+              </div>
+            </div>
+            <hr>
+            <h4 class="font-medium m-t-30">Skill Set</h4>
+            <hr>
+            <h5 class="m-t-30">Wordpress <span class="pull-right">80%</span></h5>
+            <div class="progress">
+              <div class="progress-bar bg-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:80%; height: 100%;"> <span class="sr-only">50% Complete</span> </div>
+            </div>
+            <h5 class="m-t-30">HTML 5 <span class="pull-right">90%</span></h5>
+            <div class="progress">
+              <div class="progress-bar bg-info" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:90%; height: 100%;"> <span class="sr-only">50% Complete</span> </div>
+            </div>
+            <h5 class="m-t-30">jQuery <span class="pull-right">50%</span></h5>
+            <div class="progress">
+              <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%; height: 100%;"> <span class="sr-only">50% Complete</span> </div>
+            </div>
+            <h5 class="m-t-30">Photoshop <span class="pull-right">70%</span></h5>
+            <div class="progress">
+              <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%; height: 100%;"> <span class="sr-only">50% Complete</span> </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="settings" role="tabpanel">
+          <div class="card-body">
+            <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "form-horizontal form-material" }) do |f| %>
+              <%= devise_error_messages! %>
+
+              <div class="form-group">
+                <label class="col-md-12">Foto de Perfil</label>
+                <div class="col-md-12">
+                  <%= f.file_field :avatar, class: "dropify" %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-12">Email</label>
+                <div class="col-md-12">
+                  <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-line", value: current_user.email %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-12">Apelido</label>
+                <div class="col-md-12">
+                  <%= f.text_field :username, class: "form-control form-control-line", value: current_user.username %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-12">Nome</label>
+                <div class="col-md-12">
+                  <%= f.text_field :first_name, autocomplete: "current-password", class: "form-control form-control-line", value: current_user.first_name %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-12">Sobrenome</label>
+                <div class="col-md-12">
+                  <%= f.text_field :last_name, autocomplete: "current-password", class: "form-control form-control-line", value: current_user.last_name %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-12">Data de Nascimento</label>
+                <div class="col-md-12">
+                  <%= f.date_field :birthdate, autofocus: true, class: "form-control", placeholder: "Data de Nascimento", value: current_user.birthdate %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-12">Data de Ingresso</label>
+                <div class="col-md-12">
+                  <%= f.date_field :enterdate, autofocus: true, class: "form-control", placeholder: "Data de Ingresso", value: current_user.enterdate %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-12">Telefone</label>
+                <div class="col-md-12">
+                  <%= f.text_field :phone, autofocus: true, class: "form-control", placeholder: "Telefone", value: current_user.phone %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-12">Url Git</label>
+                <div class="col-md-12">
+                  <%= f.text_field :git_url, autofocus: true, class: "form-control", placeholder: "https://www.github.com/seu_perfil", value: current_user.git_url %>
+                </div>
+              </div>
+
+              <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+              <% end %>
+
+              <div class="form-group">
+                <label class="col-md-12">Senha Atual <i>(coloque sua senha para confirmar as mudanças)</i></label>
+                <div class="col-md-12">
+                  <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control form-control-line", required: true %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <%= f.button "Atualizar", class: "btn btn-success", type: "submit" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="tab-pane" id="projects" role="tabpanel" style="max-height: 30.2em; overflow-y: auto;">
+          <div class="card-body">
+            <h1>Projetos Realizados</h1>
+            <div class="row el-element-overlay">
+              <% current_user.projects.each do |project| %>
+
+                  <div class="card mb-3" style="height: 9rem;width:100%; margin: 1em 1em;">
+                    <div class="row no-gutters el-card-item" style="padding-bottom:0;">
+                      <div class="col-md-4 el-card-avatar el-overlay-1">
+                        <a class="image-popup-vertical-fit img-card-size" href="<%= project_path(project) %>">
+                          <% if project.avatar.attached? %>
+                            <%= image_tag project.avatar, class:"", style:"object-fit: cover;" %>
+                          <% else %>
+                            <%= image_tag "assets/images/big/img1.jpg", class:"img-card-placeholder", style:"object-fit: cover;" %> 
+                          <% end %>
+                        </a>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body" style="padding-top: 0.5rem">
+                          <h3 class="box-title" style="font-size:1.6em"><%= project.name %></h3> 
+                          <h3 style="font-size:0.9rem;"><%= project.user_projects.where(user_id:current_user.id).first.role.name %></h3>
+                          <small>Até <%= project.enddate.strftime("%d/%m/%Y") %></small>
+                          <br/>
+                          <div class="m-l-10 m-r-10">
+                            <span class="text-danger">70%</span>
+                            <div class="progress">
+                              <div class="progress-bar bg-danger" role="progressbar" style="width: 60%; height: 100%; mar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="activities" role="tabpanel" style="max-height: 30.2em; overflow-y: auto;">
+          <div class="card-body">
+            <h1>Atividades que Participou</h1>
+            <div class="row el-element-overlay">
+              <% current_user.user_activities_subscriptions.each do |activity| %>
+
+                  <div class="card mb-3" style="height: 9rem; width:100%; margin: 1em 1em;">
+                    <div class="row no-gutters el-card-item" style="padding-bottom:0;">
+                      <div class="col-md-4 el-card-avatar el-overlay-1 img-card-size">
+                        <a class="image-popup-vertical-fit " href="<%= activity_path(activity) %>">
+                          <% if activity.avatar.attached? %>
+                            <%= image_tag activity.avatar.variant(resize: "250x250"), style:"object-fit: cover;" %>
+                          <% else %>
+                            <%= image_tag "assets/images/big/img1.jpg", class:"", style:"object-fit: cover;" %> 
+                          <% end %>
+                        </a>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h3 class="box-title" style="font-size:1.6em"><%= activity.name %></h3> 
+                          <small style="font-size:1.1em;"><%= activity.activity_category.name %></small>
+                          <p style="margin-top:2rem;">Criado por: <%= activity.user.full_name%></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Column -->
+</div>
+<!-- Row -->
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Right sidebar -->
+<!-- ============================================================== -->
+<!-- .right-sidebar -->
+<!-- ============================================================== -->
+<!-- End Right sidebar -->
+<!-- ============================================================== -->

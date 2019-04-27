@@ -1,0 +1,2 @@
+module RepaysHelper
+end

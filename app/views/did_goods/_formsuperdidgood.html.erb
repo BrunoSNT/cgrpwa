@@ -1,0 +1,77 @@
+<%= form_with(model: did_good, local: true) do |form| %>
+  <% if did_good.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(did_good.errors.count, "error") %> prohibited this did_good from being saved:</h2>
+
+      <ul>
+        <% did_good.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%# form.label :sender_id %>
+    <%= form.hidden_field :sender_id, class: 'form-control', value: current_user.id %>
+  </div>
+
+  <div class="form-group">
+    <%# form.label :sender_id %>
+    <%= form.hidden_field :is_superdidgood, class: 'form-control', value: true %>
+  </div>
+
+  <style>
+    .message {
+      min-height: 10em;
+    }
+  </style>
+
+  <div class="form-group">
+    <%= form.label :membro %>
+    <%= form.collection_select(:receiver_id, User.all.where.not(id: current_user.id), :id, :full_name, { prompt: 'Quem mandou bem...' }, :class => 'form-control', required: true, id: 'receiverField', onChange: "document.getElementById('card_receiver').innerHTML = this.options[this.selectedIndex].text;") %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :imagem %><br>
+    <%= form.file_field :photo, id: "imgInp" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :mensagem %>
+    <%= form.text_area :description, class: 'form-control message', id: 'descriptionField', onKeyUp: "document.getElementById('card_description').innerHTML = this.value;" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :assinatura %>
+    <%= form.text_area :signature, class: 'form-control', id: 'signatureField', onKeyUp: "document.getElementById('card_signature').innerHTML = this.value;" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Enviar", class: 'btn btn-info' %>
+  </div>
+<% end %>
+
+<script>
+    function attImage(sel) {
+        document.getElementById('card_mandou_bem_image').src = sel.options[sel.selectedIndex].value;
+        document.getElementById('hidden_photo').value = sel.options[sel.selectedIndex].value;
+    }
+
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#card_mandou_bem_image').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#imgInp").change(function() {
+        readURL(this);
+    });
+</script>

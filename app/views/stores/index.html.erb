@@ -1,0 +1,43 @@
+<div class="row el-element-overlay">
+  <div class="col-md-12">
+    <h4 class="card-title">Loja de Recompensas</h4>
+    <h6 class="card-subtitle m-b-20 text-muted">Troque suas focoins por prêmios!</h6>
+  </div>
+  <% @itens.each do |item| %>
+    <div class="col-lg-3 col-md-6">
+      <div class="card">
+        <div class="el-card-item">
+          <div class="el-card-avatar el-overlay-1">
+            <% if item.image.attached? %>
+              <%= image_tag item.image, style: "max-height: 11em; object-fit: cover;" %>
+            <% else %>
+              <%= image_tag "assets/images/big/img1.jpg", style: "max-height: 11em;" %>
+            <% end %>
+            <div class="el-overlay">
+              <ul class="el-info">
+                <li>
+                  <%= form_with(model: Order.new, local: true) do |form| %>
+                    <%= form.hidden_field :user_id, value: current_user.id %>
+                    <%= form.hidden_field :item_id, value: item.id %>
+                    <div>
+                      <%= button_tag type: 'submit', class: "btn default btn-outline", id: "register-button",  data: { confirm: 'Tem certeza?' } do %>
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                      <% end %>
+                    </div>
+                  <% end %>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="el-card-content">
+            <h3 class="box-title"><%= item.name %></h3> <small>$ <%= item.value %> </small>
+            <br/> </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<script>
+</script>

@@ -1,0 +1,60 @@
+<div class="card">
+  <div class="card-body">
+    <table class="table table-hover" id="orders-table">
+      <thead>
+      <tr>
+        <th>Membro</th>
+        <th>Pedido</th>
+        <th>Status</th>
+        <th>Data</th>
+        <th>Valor</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.user.full_name %></td>
+          <td><%= order.item.name %></td>
+          <% if order.status == "pendente" %>
+            <td><%= link_to "Pendente",  toggle_entregue_path(order), class: "btn btn-warning" %></td>
+          <% else %>
+            <td><%= link_to "Entregue", toggle_pendente_path(order), class: "btn btn-success" %></td>
+          <% end %>
+          <td><%= order.created_at.strftime("%d/%m/%Y") %></td>
+          <td>$<%= order.item.value %></td>
+          <td><%= link_to 'Ver', order, class: "btn btn-info" %></td>
+          <td><%= link_to 'Editar', edit_order_path(order), class: "btn btn-warning" %></td>
+          <td><%= link_to 'Deletar', order, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+    $(document).ready( function () {
+        $('#orders-table').DataTable(
+            {
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "Nada encontrado",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "Nenhuma data encontrada",
+                    "infoFiltered": "(filtrando _MAX_ de um total de registros)",
+                    "paginate": {
+                        "previous": "Anterior",
+                        "next": "Próxima",
+                    },
+                    "search": "Procurar"
+                }
+            }
+        );
+    } );
+</script>
+
+<%#= link_to 'Novo Pedido', new_order_path, class: "btn btn-success" %>

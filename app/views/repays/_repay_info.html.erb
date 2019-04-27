@@ -1,0 +1,28 @@
+<div class="card">
+  <div class="card-body">
+    <div style="display:flex; justify-content: space-between;">
+      <div style="display: flex;">
+        <% if repay.user.avatar.attached? %>
+          <%= image_tag repay.user.avatar, class: "profile-pic" %>
+        <% else %>
+          <%= image_tag "assets/images/users/focatia.jpg", class: "img-circle", style: "object-fit: cover; width: 50px; height: 50px;" %>
+        <% end %>
+        <h4 class="m-l-15 m-t-5"><%= repay.user.full_name %><br><span style="font-size: 13px; color: gray;"><%= repay.created_at.strftime("%d/%m") %></span></h4>
+      </div>
+      <% if repay.reembolso? %>
+        <span class="label label-primary" style="max-height: 1.8em;">
+        <%= repay.kind.humanize %>
+      </span>
+      <% else %>
+      <span class="label label-success" style="max-height: 1.8em;">
+        <%= repay.kind.humanize %>
+      </span>
+      <% end %>
+    </div><hr>
+    <h2><strong>Valor:</strong> <%= number_to_currency(repay.value) %></h2>
+    <p class="m-t-5">Descrição: <%= repay.description %></p>
+
+    <br>
+    <%= link_to "Nota fiscal", repay.fiscal_note, class: "btn btn-primary", target: "_blank" %>
+  </div>
+</div>

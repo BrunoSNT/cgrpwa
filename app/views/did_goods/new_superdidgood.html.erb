@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="row">
+    <div class="col-8 my-auto">
+      <h2>Mande um Mandou-superbem por apenas <%= @preco_supermandoubem %> focoins! Ele será brilhante e você poderá escolher a imagem</h2>
+      <%= render 'formsuperdidgood', did_good: @did_good %>
+    </div>
+    <div class="col-3">
+      <%= render 'did_goods/superdidgoodcard', didgood: @did_good, receiver_name: "", did_good_avatar: "https://media.giphy.com/media/oBPOP48aQpIxq/giphy.gif" %>
+    </div>
+  </div><br><br>
+  <%= link_to 'Voltar', did_goods_path, class: "btn btn-primary mt-2" %>
+</div>

@@ -1,0 +1,81 @@
+<body>
+	<div class="email-container">
+		<!-- <div class="pre-header">Reunião.</div> -->
+		<div class="top-box">
+			<div class="top-content">
+				<p class="box-subtitle">Negociação</p>
+			</div>
+		</div><br>
+			
+		<div class="date-box">
+			<table class="date-table">
+				<tr class="date-row">
+					<td class="date-label">Horário:</td>
+					<td class="date-info"><%= @deal.deal_date.strftime("%H:%M") %></td>
+				</tr>
+				<tr class="date-row">
+					<td class="date-label">Data:</td>
+					<td class="date-info"><%= @deal.deal_date.strftime("%d/%m/%y") %></td>
+				</tr>
+				<tr class="date-row">
+					<td class="date-label">Local:</td>
+					<td class="date-info">Sede da CJR</td>
+				</tr>
+			</table>
+		</div>
+
+
+		<div class="text-block">
+			
+			<h3 style="color: #3f7611;">Pautas:</h3>
+			<div class="agenda">
+				<ul>
+          <p>Bom dia, <%= @deal.user.full_name %></p>
+
+          <p>Você foi designado para atender o seguinte cliente:</p> 
+          <p>Nome: <%= @deal.client_name %></p> 
+          <p>Contato: <%= @deal.telephone1 %></p> 
+          <p>Email: <%= @deal.email %></p> 
+          <p>Como chegou na CJR: <%= @deal.arrival %></p> 
+          <p>Entre em contato com o cliente via e-mail/whatsapp dentro de 24h</p> 
+				</ul>
+			</div>
+
+			<div class="signature">
+				<p class="name">Artur Zorron</p>
+				<div class="signature-details">
+					<p class="function">Líder de Atendimento e Vendas</p>
+					<p class="phone">+55 (61) 99282-0627</p>
+				</div>
+			</div>
+		</div>
+		
+
+		<div class="bottom-box">
+			<div class="icones">
+				<p style="color: white;">Enviado pela Equipe CJR</p>
+			</div>
+			<a class="site" href="http://cjr.org.br/">www.cjr.org.br</a>
+		</div>
+	</div>
+</body>
+
+<!-- <spacer size="16"></spacer>
+ <container>
+  <spacer size="24"></spacer>
+ 
+  <row>
+    <columns small="12">
+      <h1>Deal Confirmation</h1>
+      <hr />
+ 
+      <p class="lead">Hi <%= @deal.user.email %>!</p>
+      <p style="color: #484848; line-height: 1.5;">
+        You've just negotiated <%= @deal.client_name %> - <%= @deal.email %>.
+        Enjoy it! =)
+      </p>
+ 
+      <spacer size="16"></spacer>
+    </column>
+  </row>
+</container> -->

@@ -1,0 +1,72 @@
+# Be sure to restart your server when you modify this file.
+
+# Version of your assets2, change this if you want to expire all your assets2.
+Rails.application.config.assets.version = '1.0'
+
+# Add additional assets2 to the asset load path.
+# Rails.application.config.assets2.paths << Emoji.images_path
+# Add Yarn node_modules folder to the asset load path.
+Rails.application.config.assets.paths << Rails.root.join('node_modules')
+
+# Precompile additional assets2.
+# application.js, application.scss, and all non-JS/CSS in the app/assets2
+# folder are already added.
+# Rails.application.config.assets2.precompile += %w( admin.js admin.css )
+Rails.application.config.assets.precompile += %w(assets/images/favicon.png)
+Rails.application.config.assets.precompile += %w(assets/plugins/bootstrap/css/bootstrap.min.css)
+Rails.application.config.assets.precompile += %w(assets/plugins/chartist-js/dist/chartist.min.css)
+Rails.application.config.assets.precompile += %w(assets/plugins/chartist-js/dist/chartist-init.css)
+Rails.application.config.assets.precompile += %w(assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css)
+Rails.application.config.assets.precompile += %w(assets/plugins/c3-master/c3.min.css)
+Rails.application.config.assets.precompile += %w(css/style.scss)
+Rails.application.config.assets.precompile += %w(css/colors/blue.css)
+Rails.application.config.assets.precompile += %w(assets/plugins/jquery/jquery.min.js)
+Rails.application.config.assets.precompile += %w(assets/plugins/bootstrap/js/popper.min.js)
+Rails.application.config.assets.precompile += %w(assets/plugins/bootstrap/js/bootstrap.min.js)
+Rails.application.config.assets.precompile += %w(js/jquery.slimscroll.js)
+Rails.application.config.assets.precompile += %w(js/waves.js)
+Rails.application.config.assets.precompile += %w( css/spinners.css )
+Rails.application.config.assets.precompile += %w( css/animate.css )
+Rails.application.config.assets.precompile += %w(js/sidebarmenu.js)
+Rails.application.config.assets.precompile += %w(assets/plugins/sticky-kit-master/dist/sticky-kit.min.js)
+Rails.application.config.assets.precompile += %w(assets/plugins/sparkline/jquery.sparkline.min.js)
+Rails.application.config.assets.precompile += %w(js/custom.min.js)
+Rails.application.config.assets.precompile += %w(assets/plugins/chartist-js/dist/chartist.min.js)
+Rails.application.config.assets.precompile += %w(assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js)
+Rails.application.config.assets.precompile += %w(assets/plugins/d3/d3.min.js)
+Rails.application.config.assets.precompile += %w(assets/plugins/c3-master/c3.min.js)
+Rails.application.config.assets.precompile += %w( assets/plugins/calendar/dist/fullcalendar.min.js )
+Rails.application.config.assets.precompile += %w( assets/plugins/calendar/dist/jquery.fullcalendar.js )
+Rails.application.config.assets.precompile += %w( assets/plugins/calendar/dist/cal-init.js )
+Rails.application.config.assets.precompile += %w( assets/plugins/calendar/dist/fullcalendar.css )
+Rails.application.config.assets.precompile += %w( scss/colors/green-dark.css )
+Rails.application.config.assets.precompile += %w( scss/colors/green.css )
+Rails.application.config.assets.precompile += %w( scss/colors/blue.css )
+Rails.application.config.assets.precompile += %w( assets/plugins/toast-master/css/jquery.toast.css )
+Rails.application.config.assets.precompile += %w(js/dashboard1.js)
+Rails.application.config.assets.precompile += %w(assets/plugins/styleswitcher/jQuery.style.switcher.js)
+Rails.application.config.assets.precompile += %w( assets/plugins/calendar/jquery-ui.min.js )
+Rails.application.config.assets.precompile += %w( assets/plugins/moment/moment.js )
+Rails.application.config.assets.precompile += %w(assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js)
+Rails.application.config.assets.precompile += %w(assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js)
+Rails.application.config.assets.precompile += %w( assets/plugins/Chart.js/Chart.min.js )
+Rails.application.config.assets.precompile += %w( assets/plugins/Chart.js/chartjs.init.js )
+Rails.application.config.assets.precompile += %w( assets/plugins/calendar/dist/gcal.js )
+Rails.application.config.assets.precompile += %w( assets/images/favicon.ico )
+Rails.application.config.assets.precompile += %w( assets/plugins/datatables/jquery.dataTables.min.js )
+Rails.application.config.assets.precompile += %w( assets/plugins/css-chart/css-chart.css )
+Rails.application.config.assets.precompile += %w( assets/plugins/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js )
+Rails.application.config.assets.precompile += %w( assets/plugins/jquery.easy-pie-chart/easy-pie-chart.init.js )
+Rails.application.config.assets.precompile += %w( jkanban.css )
+Rails.application.config.assets.precompile += %w( jkanban.js )
+Rails.application.config.assets.precompile += %w( easytimer.js )
+Rails.application.config.assets.precompile += %w( hours.css )
+Rails.application.config.assets.precompile += %w( assets/plugins/clockpicker/dist/jquery-clockpicker.min.css )
+Rails.application.config.assets.precompile += %w( assets/plugins/clockpicker/dist/jquery-clockpicker.min.js )
+Rails.application.config.assets.precompile += %w( assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js )
+Rails.application.config.assets.precompile += %w( assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css )
+Rails.application.config.assets.precompile += %w( assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css )
+Rails.application.config.assets.precompile += %w( assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js )
+Rails.application.config.assets.precompile += %w( foundation_emails.css )
+Rails.application.config.assets.precompile += %w(*.jpg *.png)
+Rails.configuration.assets.precompile += %w[serviceworker.js manifest.json]

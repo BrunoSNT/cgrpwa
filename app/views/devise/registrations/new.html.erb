@@ -1,0 +1,104 @@
+<section id="wrapper">
+  <div class="login-register" style="background-image: url( <%= asset_path 'assets/images/background/hero_cjr.jpg' %>);">
+    <div class="login-box card" style="width: 650px !important;">
+      <div class="card-body">
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "form-horizontal form-material", id: "loginform"}) do |f| %>
+          <%= devise_error_messages! %>
+
+          <h3 class="box-title m-b-20">Cadastrar-se</h3>
+          <div class="row">
+            <div class="col-md-6 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Email *", required: true %>
+              </div>
+
+              <div class="form-group">
+                <%= f.text_field :username, autofocus: true, class: "form-control", placeholder: "Apelido" %>
+              </div>
+
+              <div class="form-group">
+                <%= f.text_field :first_name, autofocus: true, class: "form-control", placeholder: "Nome *", required: true %>
+              </div>
+
+              <div class="form-group">
+                <%= f.text_field :last_name, autofocus: true, class: "form-control", placeholder: "Sobrenome *", required: true %>
+              </div>
+
+              <div class="form-group">
+                <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "Senha *", required: true %>
+              </div>
+
+              <div class="form-group">
+                <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirmar Senha *", required: true %>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12 col-xs-12">
+
+              <div class="form-group">
+                <%= f.text_field :phone, onkeypress: "mascara(this, '## #####-####')", maxlength:"13", autofocus: true, class: "form-control", placeholder: "Telefone" %>
+              </div>
+
+              <%= fields_for @user_occupation_core do |user_core_occupations_fields| %>
+                <%= user_core_occupations_fields.collection_select(:core_id, Core.all, :id, :name, { prompt: 'Núcleo...' }, :class => 'form-control', required: true) %><br><br>
+                <%= user_core_occupations_fields.collection_select(:occupation_id, Occupation.all, :id, :name, { prompt: 'Cargo...' }, :class => 'form-control', required: true) %>
+              <% end %>
+
+              <br><br>
+              <div class="form-group">
+                <%= f.label "Data de Nascimento" %><br/>
+                <%= f.date_field :birthdate, autofocus: true, class: "form-control", placeholder: "Data de Nascimento" %>
+              </div>
+
+              <div class="form-group">
+                <%= f.label "Data de Ingresso" %><br/>
+                <%= f.date_field :enterdate, autofocus: true, class: "form-control", placeholder: "Data de Ingresso" %>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="form-group text-center m-t-20">
+            <div class="col-xs-12">
+              <%= f.button "Registrar-se", class: "btn btn-success btn-lg btn-block text-uppercase waves-effect waves-light", type: "submit" %>
+            </div>
+          </div>
+          <div class="form-group m-b-0">
+            <div class="col-sm-12 text-center">
+              <p>Já tem uma conta? <a href="<%= new_user_session_path %>" class="text-info m-l-5"><b>Entrar</b></a></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<script language="JavaScript">
+    /*
+    A função Mascara tera como valores no argumento os dados inseridos no input (ou no evento onkeypress)
+    onkeypress="mascara(this, '## ####-####')"
+    onkeypress = chama uma função quando uma tecla é pressionada, no exemplo acima, chama a função mascara e define os valores do argumento na função
+    O primeiro valor é o this, é o Apontador/Indicador da Mascara, o '## ####-####' é o modelo / formato da mascara
+    no exemplo acima o # indica os números, e o - (hifen) o caracter que será inserido entre os números, ou seja, no exemplo acima o telefone ficara assim: 11-4000-3562
+    para o celular de são paulo o modelo deverá ser assim: '## #####-####' [11 98563-1254]
+    para o RG '##.###.###.# [40.123.456.7]
+    para o CPF '###.###.###.##' [789.456.123.10]
+    Ou seja esta mascara tem como objetivo inserir o hifen ou espaço automáticamente quando o usuário inserir o número do celular, cpf, rg, etc
+
+    lembrando que o hifen ou qualquer outro caracter é contado tambem, como: 11-4561-6543 temos 10 números e 2 hifens, por isso o valor de maxlength será 12
+    <input type="text" name="telefone" onkeypress="mascara(this, '## ####-####')" maxlength="12">
+    neste código não é possivel inserir () ou [], apenas . (ponto), - (hifén) ou espaço
+    */
+
+    function mascara(t, mask){
+        var i = t.value.length;
+        var saida = mask.substring(1,0);
+        var texto = mask.substring(i)
+        if (texto.substring(0,1) != saida){
+            t.value += texto.substring(0,1);
+        }
+    }
+</script>

@@ -1,0 +1,12 @@
+<div class="container">
+<div class="row">
+  <div class="col-8 my-auto">
+    <%= link_to "Mandar Mandou-superbem", superdidgood_path, class: "btn btn-success" %>
+    <%= render 'form', did_good: @did_good %>
+  </div>
+  <div class="col-3">
+    <%= render 'did_goods/card', receiver_name: "", description: "", did_good_avatar: "https://diarinho.com.br/wp-content/uploads/2018/07/lula-sera-solto_foto-jose-cruz-agencia-brasil.jpg", did_good_id: "id", did_good_date: Time.now.strftime("%Y"), did_good_signature: "Mandou Bem!" %>
+  </div>
+</div><br><br>
+  <%= link_to 'Voltar', did_goods_path, class: "btn btn-primary mt-2" %>
+</div>

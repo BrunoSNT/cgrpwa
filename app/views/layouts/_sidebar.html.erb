@@ -1,0 +1,99 @@
+<aside class="left-sidebar">
+  <!-- Sidebar scroll-->
+  <div class="scroll-sidebar">
+    <!-- User profile -->
+    <div class="user-profile" style="background: url(<%= asset_path 'assets/images/background/userinfo.jpg' %>) no-repeat;">
+      <!-- User profile image -->
+      <div class="profile-img">
+        <% if current_user.avatar.attached? %>
+          <%= image_tag current_user.avatar, class: "", style: "object-fit: cover; width: 50px; height: 50px;" %>
+        <% else %>
+          <%= image_tag "assets/images/users/focatia.jpg", class: "img-circle", style: "object-fit: cover; width: 50px; height: 50px;" %>
+        <% end %>
+      </div>
+      <!-- User profile text-->
+      <div class="profile-text"> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><%= current_user.full_name %></a>
+        <div class="dropdown-menu animated flipInY"> <a href="<%= edit_user_registration_path %>" class="dropdown-item"><i class="ti-user"></i> Meu Perfil</a> <a href="<%= wallet_path %>" class="dropdown-item"><i class="ti-wallet"></i> Carteira</a> <a href="<%= notifications_path %>" class="dropdown-item"><i class="ti-email"></i> Notificações</a>
+          <div class="dropdown-divider"></div>
+          <%= link_to "<i class='fa fa-power-off'></i> Sair".html_safe, destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+        </div>
+      </div>
+    </div>
+    <!-- End User profile text-->
+    <!-- Sidebar navigation-->
+    <nav class="sidebar-nav">
+      <ul id="sidebarnav">
+        <li class="nav-small-cap">PESSOAL</li>
+        <li class="nav-item"><a href="<%= root_path %>" class="waves-effect waves-dark" aria-expanded="false"><i class="mdi mdi-gauge"></i> Dashboard</a></li>
+        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-face-profile"></i><span class="hide-menu">Perfil</span></a>
+          <ul aria-expanded="false" class="collapse">
+            <li><a href="<%= hours_path %>"><i class="mdi mdi-av-timer"></i> Horas</a></li>
+            <li><a href="<%= edit_user_registration_path %>"><i class="mdi mdi-chart-timeline"></i> Timeline</a></li>
+            <li><a href="<%= wallet_path %>"><i class="mdi mdi-wallet"></i> Carteira</a></li>
+            <li><a href="<%= redirect_path %>"><i class="mdi mdi-calendar"></i> Calendário </a></li>
+          </ul>
+        </li>
+        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-hospital-building"></i><span class="hide-menu">Empresarial</span></a>
+          <ul aria-expanded="false" class="collapse">
+            <li><a href="<%= documents_path %>"><i class="mdi mdi-file-document"></i> Documentos </a></li>
+            <li><a href="<%= quotes_path %>"><i class="mdi mdi-auto-fix"></i> Orçamentos </a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item"><a href="<%= activities_path%>"><i class="mdi mdi-ticket"></i> Atividades</a></li>
+        <li class="nav-item"><a href="<%= did_goods_path %>"><i class="mdi mdi-thumb-up"></i> Mandou-bens</a></li>
+        <li class="nav-item"><a href="<%= projects_path %>"><i class="mdi mdi-briefcase"></i> Projetos</a></li>
+        <li class="nav-item"><a href="<%= reembolsos_path %>"><i class="mdi mdi-hand-pointing-right"></i> Reembolsos</a></li>
+
+
+        <li class="nav-devider">
+        <li class="nav-small-cap">NEGOCIAÇÕES</li>
+        <li class="nav-item"><a href="<%= deals_path %>"><i class="mdi mdi-sale"></i> Minhas Negociações</a></li>
+        <li class="nav-item"><a href="<%= sales_tower_path %>"><i class="mdi mdi-tower-fire"></i> Torre de Vendas</a></li>
+        <li class="nav-item"><a href="<%= negs_history_path %>"><i class="mdi mdi-history"></i> Histórico de Vendas</a></li>
+        <li class="nav-devider">
+        <li class="nav-small-cap">RECOMPENSAS</li>
+        <li class="nav-item"><a href="<%= store_path %>"><i class="mdi mdi-shopping"></i> Loja</a></li>
+        <li class="nav-item"><a href="<%= pedidos_path %>"><i class="mdi mdi-view-list"></i> Seus Pedidos</a></li>
+        <li class="nav-devider">
+        <% if current_user.has_director_access? %>
+          <li class="nav-small-cap">ADMIN</li>
+          <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-building"></i><span class="hide-menu">Empresa</span></a>
+            <ul aria-expanded="false" class="collapse">
+              <li><a href="<%= cores_path %>"><i class="mdi mdi-domain"></i> Núcleos</a></li>
+              <li><a href="<%= occupations_path %>"><i class="mdi mdi-clipboard-account"></i> Cargos</a></li>
+              <li><a href="<%= setups_path %>"><i class="mdi mdi-settings"></i> Configurações</a></li>
+            </ul>
+          </li>
+          <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-shopping-bag"></i><span class="hide-menu">Loja</span></a>
+            <ul aria-expanded="false" class="collapse">
+              <li><a href="<%= items_path %>"><i class="mdi mdi-cart-plus"></i> Itens</a></li>
+              <li><a href="<%= orders_path %>"><i class="mdi mdi-shopping"></i> Pedidos</a></li>
+            </ul>
+          </li>
+          <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash"></i><span class="hide-menu">Financeiro</span></a>
+            <ul aria-expanded="false" class="collapse">
+              <li><a href="<%= payments_path %>"><i class="fa fa-money"></i> Pagamentos</a></li>
+              <li><a href="<%= repays_path %>"><i class="mdi mdi-hand-pointing-right"></i> Reembolsos</a></li>
+              <li><a href="<%= extracts_path %>"><i class="mdi mdi-file-cloud"></i> Extratos</a></li>
+              <li><a href="<%= money_flow_path %>"><i class="mdi mdi-home"></i> Casa da moeda</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="<%= diretor_projects_path %>"><i class="mdi mdi-folder-multiple"></i> Projetos</a></li>
+          <li class="nav-item"><a href="<%= goals_path %>"><i class="mdi mdi-chart-pie"></i> Metas</a></li>
+          <li class="nav-item"><a href="<%= dashboard_hours_path %>"><i class="mdi mdi-clock"></i> Horas</a></li>
+          <li class="nav-item"><a href="<%= activity_categories_path %>"><i class="mdi mdi-ticket"></i> Atividades</a></li>
+          <li class="nav-devider">
+        <% end %>
+      </ul>
+    </nav>
+    <!-- End Sidebar navigation -->
+  </div>
+  <!-- End Sidebar scroll-->
+  <!-- Bottom points-->
+  <div class="sidebar-footer">
+    <!-- item--><a href="" class="link" data-toggle="tooltip" title="Settings"><i class="ti-settings"></i></a>
+    <!-- item--><a href="" class="link" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
+    <!-- item--><a href="" class="link" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a> </div>
+  <!-- End Bottom points-->
+</aside>

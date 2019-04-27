@@ -1,0 +1,5 @@
+Negotiations
+
+Hi <%= @deal.email %>,
+You've just rented the car <%= @deal.client_name %> - <%= @deal.email %>.
+Enjoy it! =)

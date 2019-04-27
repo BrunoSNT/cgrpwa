@@ -1,0 +1,69 @@
+<div class="card">
+  <div class="card-body">
+    <table class="table table-hover" id="itens-table">
+      <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Valor</th>
+        <th>Quantidade</th>
+        <th>Disponível</th>
+        <th>Imagem</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @items.each do |item| %>
+        <tr>
+          <td><%= item.name %></td>
+          <td><%= item.description %></td>
+          <td><%= item.value %></td>
+          <td><%= item.quantity %></td>
+          <% if item.available %>
+            <td>
+              <%= link_to "Sim", toggle_nao_path(item), class: "btn btn-success" %>
+            </td>
+          <% else %>
+            <td>
+              <%= link_to "Não", toggle_sim_path(item), class: "btn btn-danger" %>
+            </td>
+          <% end %>
+          <% if item.image.attached? %>
+            <td><%= image_tag item.image, style: "height: 80px; width: 150px; object-fit: cover;" %></td>
+          <% else %>
+            <td><%= image_tag "assets/images/big/img1.jpg", style: "height: 80px; width: 150px; object-fit: cover;" %></td>
+          <% end %>
+          <td><%= link_to 'Ver', item, class: "btn btn-info" %></td>
+          <td><%= link_to 'Editar', edit_item_path(item), class: "btn btn-warning" %></td>
+          <td><%= link_to 'Deletar', item, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br>
+<script>
+    $(document).ready( function () {
+        $('#itens-table').DataTable(
+            {
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "Nada encontrado",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "Nenhuma data encontrada",
+                    "infoFiltered": "(filtrando _MAX_ de um total de registros)",
+                    "paginate": {
+                        "previous": "Anterior",
+                        "next": "Próxima",
+                    },
+                    "search": "Procurar"
+                }
+            }
+        );
+    } );
+</script>
+<%= link_to 'Novo Item', new_item_path, class: "btn btn-success" %>

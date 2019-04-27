@@ -1,0 +1,28 @@
+<h2>Cobrando <%= @horas_cobradas %>h</h2>
+<hr>
+<div class="row">
+  <% @array_users.each do |user| %>
+    <div class="col-lg-3 col-md-6 m-b-30" align="center">
+      <div class="card">
+        <div class="card-body">
+          <h4><%= user[:user].full_name %></h4>
+          <div class="chart easy-pie-chart-1" data-percent="<%= user[:hours_percentage] %>" data-color="<%= user[:color] %>">
+          <% if user[:user].avatar.attached? %>
+            <span>
+              <%= image_tag user[:user].avatar, class: 'img-circle'%>
+            </span>
+          <% else %>
+            <span>
+              <%= image_tag "assets/images/users/1.jpg", class: 'img-circle'%>
+            </span>
+          <% end %>
+          </div><br>
+          <h6><%= user[:hours] %></h6>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= javascript_include_tag "assets/plugins/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js" %>
+<%= javascript_include_tag "assets/plugins/jquery.easy-pie-chart/easy-pie-chart.init.js" %>

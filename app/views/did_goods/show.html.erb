@@ -1,0 +1,14 @@
+<% if @did_good.sender.id == current_user.id %>
+  <% if @did_good.is_superdidgood %>
+    <%= render 'did_goods/superdidgoodcard', didgood: @did_good, receiver_name: false %>
+  <% else %>
+    <%= render 'did_goods/card', receiver_name: @did_good.receiver.full_name, description: @did_good.description, did_good_avatar: @did_good.photourl, did_good_id: @did_good.id, did_good_date: @did_good.created_at.strftime("%Y"), did_good_signature: @did_good.signature %>
+  <% end %>
+<% else %>
+  <% if @did_good.is_superdidgood %>
+    <%= render 'did_goods/superdidgoodcard', didgood: @did_good, receiver_name: @did_good.sender.full_name %>
+  <% else %>
+    <%= render 'did_goods/card', receiver_name: @did_good.sender.full_name, description: @did_good.description, did_good_avatar: @did_good.photourl, did_good_id: @did_good.id, did_good_date: @did_good.created_at.strftime("%Y"), did_good_signature: @did_good.signature %>
+  <% end %>
+<% end %><br><br>
+<%= link_to 'Voltar', did_goods_path, class: "btn btn-primary" %>

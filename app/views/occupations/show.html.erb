@@ -1,0 +1,13 @@
+<div class="card col-md-6">
+  <div class="card-body">
+    <strong>Cargo</strong><br>
+    <%= @occupation.name %><br>
+    <strong>Descrição</strong><br>
+    <%= @occupation.description %><br>
+    <strong>Admin?</strong><br>
+    <%= @occupation.is_admin? %><br>
+  </div>
+</div>
+
+<%= link_to 'Editar', edit_occupation_path(@occupation), class: "btn btn-warning" %>
+<%= link_to 'Voltar', occupations_path, class: "btn btn-primary" %>

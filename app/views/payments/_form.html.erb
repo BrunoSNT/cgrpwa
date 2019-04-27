@@ -1,0 +1,49 @@
+<%= stylesheet_link_tag "assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" %>
+<%= stylesheet_link_tag "assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" %>
+<%= javascript_include_tag "assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %>
+<%= javascript_include_tag "assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js" %>
+
+<%= form_with(model: payment, local: true) do |form| %>
+  <% if payment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(payment.errors.count, "error") %> prohibited this payment from being saved:</h2>
+
+      <ul>
+      <% payment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :projeto %>
+    <%= form.collection_select(:project_id, Project.all, :id, :name, { prompt: 'Projeto...' }, :class => 'form-control', required: true) %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :valor %>
+    <%= form.text_field :value, value: number_to_currency(form.object.value.to_f, delimiter: '', unit: ''), step: :any, class: "form-control money", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :data_do_pagamento %>
+    <%= form.text_field :payment_date, class: "form-control", id: "mdate", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :relatorio_de_horas %>
+    <%= form.file_field :hour_report, class: "form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Enviar", class: "btn btn-success" %>
+  </div>
+<% end %>
+
+<script>
+    $('#mdate').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
+</script>
+<script>
+    $('.money').mask("###0.00", {reverse: true});
+</script>

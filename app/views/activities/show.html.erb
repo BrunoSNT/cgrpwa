@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+<h1><%= @activity.name %></h1>
+<div class="card" style="margin-top: 1em;">
+    <div class="card-body">
+        <div class="form-group">
+        <label style="font-weight: 600;">Foto</label>
+        <br>
+        <% if @activity.avatar.attached? %>
+          <%= image_tag @activity.avatar.variant(resize:"250x250") %>
+        <% else %>
+          <%= image_tag 'assets/images/big/img1.jpg', style:"width:250px; height:250px;" %>
+        <% end %>
+        </div>
+
+        <div class="form-group">
+        <label style="font-weight: 600;">Categoria</label>
+        <br>
+        <%= @activity.activity_category.name %>
+        </div>
+
+        <div class="form-group">
+        <label style="font-weight: 600;">Criador</label>
+        <br>
+        <%= @activity.user.full_name %>
+        </div>
+
+        <div class="form-group">
+        <label style="font-weight: 600;">Descrição</label>
+        <br>
+        <%= @activity.description %>
+        </div>      
+    </div>
+</div>
+
+<%= link_to 'Editar', edit_activity_path(@activity) %> |
+<%= link_to 'Voltar', :back %>

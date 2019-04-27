@@ -1,0 +1,54 @@
+<div class="card">
+  <div class="card-body">
+    <table class="table table-hover" id="orders-table">
+      <thead>
+      <tr>
+        <th>Pedido</th>
+        <th>Status</th>
+        <th>Data</th>
+        <th>Valor</th>
+        <th></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.item.name %></td>
+          <% if order.status == "pendente" %>
+            <td><label class="label label-warning">Pendente</label></td>
+          <% else %>
+            <td><label class="label label-success">Entregue</label></td>
+          <% end %>
+          <td><%= order.created_at.strftime("%d/%m/%Y") %></td>
+          <td>$<%= order.item.value %></td>
+          <td><%= link_to 'Ver', order, class: "btn btn-info" %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+    $(document).ready( function () {
+        $('#orders-table').DataTable(
+            {
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "Nada encontrado",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "Nenhuma data encontrada",
+                    "infoFiltered": "(filtrando _MAX_ de um total de registros)",
+                    "paginate": {
+                        "previous": "Anterior",
+                        "next": "Próxima",
+                    },
+                    "search": "Procurar"
+                }
+            }
+        );
+    } );
+</script>
+
+<%#= link_to 'Novo Pedido', new_order_path, class: "btn btn-success" %>

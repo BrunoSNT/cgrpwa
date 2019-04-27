@@ -1,0 +1,27 @@
+<%= form_with(model: occupation, local: true, html: { class: "form-material" }) do |form| %>
+  <% if occupation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(occupation.errors.count, "error") %> prohibited this occupation from being saved:</h2>
+
+      <ul>
+      <% occupation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :nome %>
+    <%= form.text_field :name, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :descrição %>
+    <%= form.text_area :description, class: "form-control", style: "min-height: 4em;" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Enviar", class: "btn btn-success" %>
+  </div>
+<% end %>

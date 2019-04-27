@@ -1,0 +1,8 @@
+<div class="card col-md-6">
+  <div class="card-body">
+    <%= render 'form', occupation: @occupation %>
+  </div>
+</div>
+
+<%= link_to 'Ver', @occupation, class: "btn btn-info" %>
+<%= link_to 'Voltar', occupations_path, class: "btn btn-primary" %>

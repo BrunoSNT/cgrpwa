@@ -1,0 +1,173 @@
+
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+<div class="preloader">
+  <svg class="circular" viewbox="25 25 50 50">
+  <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle> </svg>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+
+    <div class="row">
+      <!-- Column -->
+      <div class="col-lg-3 col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-row">
+              <div class="round round-lg align-self-center round-info"><i class="ti-wallet"></i></div>
+              <div class="m-l-10 align-self-center">
+                <h3 class="m-b-0 font-light">$<%= current_user.coins %></h3>
+                <h5 class="text-muted m-b-0">Saldo Focoins</h5></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Column -->
+      <!-- Column -->
+      <div class="col-lg-3 col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-row">
+              <div class="round round-lg align-self-center round-warning"><i class="mdi mdi-briefcase"></i></div>
+              <div class="m-l-10 align-self-center">
+                <h3 class="m-b-0 font-lgiht"><%= current_user.projects.count %></h3>
+                <h5 class="text-muted m-b-0">Seus Projetos</h5></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Column -->
+      <!-- Column -->
+      <div class="col-lg-3 col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-row">
+              <div class="round round-lg align-self-center round-primary"><i class="mdi mdi-ticket"></i></div>
+              <div class="m-l-10 align-self-center">
+                <h3 class="m-b-0 font-lgiht"><%= @activity_count %></h3>
+                <h5 class="text-muted m-b-0">Atividades</h5></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Column -->
+      <!-- Column -->
+      <% total_hours = clockify_friendly_hour_just_hour(JSON.parse(@response_workspace)["totalTime"]) %>
+      <div class="col-lg-3 col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-row">
+              <div class="round round-lg align-self-center round-danger"><i class="mdi mdi-av-timer"></i></div>
+              <div class="m-l-10 align-self-center">
+                <h3 class="m-b-0 font-lgiht"><%= clockify_friendly_hour_just_hour(JSON.parse(@response_workspace_total)["totalTime"]) %></h3>
+                <h5 class="text-muted m-b-0">Total de Horas</h5></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Column -->
+    </div>
+    <div class="row">
+      <!-- Column -->
+      <div class="col-lg-8 col-md-7">
+        <div class="card">
+          <div class="card-body">
+            <div id="calendar"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-5">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Suas Horas</h3>
+            <h6 class="card-subtitle">Horas essa semana</h6>
+            <div id="visitor" style="height:290px; width:100%;"></div>
+          </div>
+          <%= link_to 'Conecte seu Calendário', redirect_path, class: "btn btn-info" %>
+          <div>
+            <hr class="m-t-0 m-b-0">
+          </div>
+          <div class="card-body text-center ">
+            <ul class="list-inline m-b-0">
+              <li>
+                <h6 class="text-muted text-danger">
+                  <i class="fa fa-circle font-10 m-r-10 "></i>Horas</h6>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+<%= javascript_include_tag "assets/plugins/calendar/jquery-ui.min.js" %>
+<%= javascript_include_tag "assets/plugins/moment/moment.js" %>
+<%= javascript_include_tag "assets/plugins/calendar/dist/fullcalendar.min.js" %>
+<%= javascript_include_tag "assets/plugins/calendar/dist/gcal.js" %>
+
+<script>
+  $('#calendar').fullCalendar({
+  events: [
+    {
+      title  : 'event1',
+      start  : '2019-03-01'
+    },
+    {
+      title  : 'event2',
+      start  : '2019-03-05',
+      end    : '2019-03-07'
+    },
+    {
+      title  : 'event3',
+      start  : '2019-03-09T12:30:00',
+      allDay : false // will make the time show
+    }
+  ]
+});
+</script>
+
+<script>
+    $(function () {
+        "use strict";
+
+        var chart = c3.generate({
+            bindto: '#visitor',
+            data: {
+                columns: [
+                    ['Restante', <%= @horas_cobradas %> - <%= clockify_parsed_hours(JSON.parse(@response_workspace)["totalTime"])[1] %>],
+                    ['Horas', <%= clockify_parsed_hours(JSON.parse(@response_workspace)["totalTime"])[1] %>],
+                ],
+
+                type : 'donut',
+                onclick: function (d, i) { console.log("onclick", d, i); },
+                onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+                onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+            },
+            donut: {
+                label: {
+                    show: false
+                },
+                title: "<%= clockify_friendly_hour(JSON.parse(@response_workspace)["totalTime"]) %> de <%= @horas_cobradas %>h",
+                width:20,
+
+            },
+
+            legend: {
+                hide: true
+                //or hide: 'data1'
+                //or hide: ['data1', 'data2']
+            },
+            color: {
+                pattern: ['#eceff1', '<%= hour_color(total_hours, @horas_cobradas) %>']
+            }
+        });
+
+    })
+</script>
+
+

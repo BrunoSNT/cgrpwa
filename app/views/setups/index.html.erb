@@ -1,0 +1,33 @@
+<div class="card">
+  <div class="card-body">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Horas Semanais</th>
+        <th>Preço do Super-mandoubem</th>
+        <th>% Política Devs</th>
+        <th>% Política Negs</th>
+        <th colspan="3"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @setups.each do |setup| %>
+        <tr>
+          <td><%= setup.weekly_hours %></td>
+          <td><%= setup.superdidgood_price %></td>
+          <td><%= setup.devs_percentage %></td>
+          <td><%= setup.negs_percentage %></td>
+          <td><%= link_to 'Ver', setup, class: "btn btn-info"%></td>
+          <td><%= link_to 'Editar', edit_setup_path(setup), class: "btn btn-warning" %></td>
+          <td><%= link_to 'Deletar', setup, class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<br>
+
+<%= link_to 'Nova Configuração', new_setup_path, class: "btn btn-success" %>

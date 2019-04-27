@@ -1,0 +1,57 @@
+<div class="card">
+  <div class="card-body">
+    <table class="table table-hover" id="extracts-table">
+      <thead>
+      <tr>
+        <th>Usuário</th>
+        <th>Tipo</th>
+        <th>Descrição</th>
+        <th>Valor</th>
+        <th>Data</th>
+        <th>Ver</th>
+        <th>Editar</th>
+        <th>Deletar</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @extracts.each do |extract| %>
+        <tr>
+          <td><%= extract.user.full_name %></td>
+          <td><span class="label label-<%= extract_kind(extract) %>"><%= extract.kind.humanize %></span></td>
+          <td><%= extract.description %></td>
+          <td><%= number_to_currency(extract.value) %></td>
+          <td><%= extract.created_at.strftime("%d/%m/%y") %></td>
+          <td><%= link_to 'Show', extract, class: "btn btn-info" %></td>
+          <td><%= link_to 'Edit', edit_extract_path(extract), class: "btn btn-warning" %></td>
+          <td><%= link_to 'Destroy', extract, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<br>
+
+<%= link_to 'Novo Extrato', new_extract_path, class: "btn btn-primary" %>
+<script>
+    $(document).ready( function () {
+        $('#extracts-table').DataTable(
+            {
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "Nada encontrado",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "Nenhuma data encontrada",
+                    "infoFiltered": "(filtrando _MAX_ de um total de registros)",
+                    "paginate": {
+                        "previous": "Anterior",
+                        "next": "Próxima",
+                    },
+                    "search": "Procurar"
+                }
+            }
+        );
+    } );
+</script>

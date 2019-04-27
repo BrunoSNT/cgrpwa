@@ -1,0 +1,21 @@
+<div class="nested-fields">
+  <div class="row p-t-20">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="control-label">Membro</label>
+        <%= f.collection_select(:user_id, User.all, :id, :full_name, {
+        prompt: 'Membro...' }, :class => 'form-control', required: true) %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="control-label">Posição</label>
+        <%= f.collection_select(:role_id, Role.all, :id, :name, { prompt:
+        'Posição...' }, :class => 'form-control', required: true) %>
+      </div>
+    </div>
+    <!--/span-->
+  </div>
+    <%= link_to_remove_association "Remover Dev", f, class: 'btn btn-danger' %>
+  <br><br><br>
+</div>

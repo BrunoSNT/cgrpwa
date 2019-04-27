@@ -1,0 +1,3 @@
+Repay#paid
+
+<%= @greeting %>, find me in app/views/repay_mailer/paid.text.erb

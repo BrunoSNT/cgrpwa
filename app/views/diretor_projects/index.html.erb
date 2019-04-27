@@ -1,0 +1,45 @@
+  <!-- Row -->
+<div class="card-columns el-element-overlay">
+  <% @current_projects.each do |project| %>
+    <div class="">
+      <div class="card">
+        <div class="el-card-item">
+          <div class="el-card-avatar el-overlay-1">
+            <% if project.avatar.attached? %>
+              <%= link_to project_path(project) do %>
+                <%= image_tag project.avatar, class: "image-project" %>
+              <% end %>
+            <% else %>
+                <%= link_to project_path(project), class: "image-popup-vertical-fit"  do %>
+                  <%= image_tag 'assets/images/big/img1.jpg', class: "image-project"%>
+              <% end %>
+            <% end %> 
+          </div>
+          <div class="el-card-content">
+            <h3 class="box-title"><%= project.name %></h3> <small>Até <%= project.enddate.strftime("%d/%m/%Y") %></small>
+            <br/>
+            <div class="m-l-10 m-r-10">
+              
+              <span class="text-danger"><%= percentageDone(project) %>%</span>
+              <div class="progress">
+                <div class="progress-bar bg-<%= project_color(project) %> active progress-bar-striped" role="progressbar" style="width: <%= percentageDone(project) %>%; height: 100%;"></div>
+              </div>
+            </div>
+          </div>
+            <ul class="project-developers">
+                <% project.developers.each do |dev| %>
+                <li>
+                  <% if dev.avatar.attached? %>
+                    <%= image_tag dev.avatar, alt: "user", 'data-toggle': "tooltip", "data-placement": "top", title: "", 'data-original-title': dev.first_name %>
+                  <% else %>
+                    <%= image_tag "default_user_icon.jpg", alt: "user", 'data-toggle': "tooltip", "data-placement": "top", title: "", 'data-original-title': dev.first_name %>
+                  <% end %>
+                </li>
+                <% end %>
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

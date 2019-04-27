@@ -1,0 +1,259 @@
+<header class="topbar">
+  <nav class="navbar top-navbar navbar-expand-md navbar-light">
+    <!-- ============================================================== -->
+    <!-- Logo -->
+    <!-- ============================================================== -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="<%= root_path %>">
+        <!-- Logo icon --><b>
+        <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+        <!-- Dark Logo icon -->
+        <%= image_tag "assets/images/logo-icon.png", class: "dark-logo" %>
+        <!-- Light Logo icon -->
+        <%= image_tag "assets/images/logo-light-icon.png", class: "light-logo" %>
+      </b>
+        <!--End Logo icon -->
+        <!-- Logo text --><span>
+                         <!-- dark Logo text -->
+        <%#= image_tag "assets/images/logo-text.png", class: "dark-logo" %>
+        <!-- Light Logo text -->
+        <%#= image_tag "assets/images/logo-light-text.png", class: "light-logo" %></span> </a>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Logo -->
+    <!-- ============================================================== -->
+    <div class="navbar-collapse">
+      <!-- ============================================================== -->
+      <!-- toggle and nav items -->
+      <!-- ============================================================== -->
+      <ul class="navbar-nav mr-auto mt-md-0">
+        <!-- This is  -->
+        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
+        <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+        <!-- ============================================================== -->
+        <!-- Search -->
+        <!-- ============================================================== -->
+        <li class="nav-item hidden-sm-down search-box"> <a class="nav-link hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
+          <form class="app-search">
+            <input type="text" class="form-control" placeholder="Procurar..."> <a class="srh-btn"><i class="ti-close"></i></a> </form>
+        </li>
+        <!-- ============================================================== -->
+        <!-- Messages -->
+        <!-- ============================================================== -->
+        <li class="nav-item dropdown mega-dropdown"> <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-view-grid"></i></a>
+          <div class="dropdown-menu scale-up-left">
+            <ul class="mega-dropdown-menu row">
+              <li class="col-lg-3 col-xlg-2 m-b-30">
+                <h4 class="m-b-20">PROJETOS</h4>
+                <!-- CAROUSEL -->
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner" role="listbox">
+                    <% Project.current_projects.each_with_index do |project,idx| %>
+                      <% if idx == 0 %>
+                        <div class="carousel-item active">
+                          <div class="container">
+                            <% if project.avatar.attached? %>
+                              <%= image_tag project.avatar, class: "d-block img-fluid" %>
+                            <% else %>
+                              <%= image_tag "assets/images/big/img1.jpg", class: "d-block img-fluid" %>
+                            <% end %>
+                          </div>
+                        </div>
+                      <% else %>
+                        <div class="carousel-item">
+                          <div class="container">
+                            <% if project.avatar.attached? %>
+                              <%= image_tag project.avatar, class: "d-block img-fluid" %>
+                            <% else %>
+                              <%= image_tag "assets/images/big/img1.jpg", class: "d-block img-fluid" %>
+                            <% end %>
+                          </div>
+                        </div>
+                      <% end %>
+                    <% end %>
+                  </div>
+                  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a>
+                  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span> </a>
+                </div>
+                <!-- End CAROUSEL -->
+              </li>
+              <li class="col-lg-3 m-b-30">
+                <h4 class="m-b-20">ATIVIDADES</h4>
+                <!-- Accordian -->
+                <div id="accordion" class="nav-accordion" role="tablist" aria-multiselectable="true">
+                  <% Activity.where("activity_date > ?",DateTime.now).order(activity_date: :asc).last(5).each_with_index do |activity, idx| %>
+                    <% if idx == 0 %>
+                      <div class="card">
+                        <div class="card-header" role="tab" id="headingOne">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              <%= activity.name %> #<%= idx+1 %>
+                            </a>
+                          </h5> </div>
+                        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                          <div class="card-body">
+                            <%= activity.activity_date.strftime("%d/%m/%Y %H:%M") %><br>
+                            <%= activity.description %></div>
+                        </div>
+                      </div>
+                    <% else %>
+                      <div class="card">
+                        <div class="card-header" role="tab" id="headingTwo">
+                          <h5 class="mb-0">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo<%= idx %>" aria-expanded="false" aria-controls="collapseTwo">
+                              <%= activity.name %> #<%= idx+1 %>
+                            </a>
+                          </h5> </div>
+                        <div id="collapseTwo<%= idx %>" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                          <div class="card-body">
+                            <%= activity.activity_date.strftime("%d/%m/%Y %H:%M") %><br>
+                            <%= activity.description %></div>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
+                </div>
+              </li>
+              <% unless current_page?(new_did_good_path) or current_page?(superdidgood_path) %>
+                <li class="col-lg-3  m-b-30">
+                  <h4 class="m-b-20">MANDOU BEM</h4>
+                  <!-- Contact -->
+                  <%= render 'did_goods/form', did_good: DidGood.new %>
+                </li>
+                <li class="col-lg-3 col-xlg-4 m-b-30">
+                  <h4 class="m-b-20">PREVIEW</h4>
+                  <!-- List style -->
+                  <%= render 'did_goods/card', receiver_name: "", description: "", did_good_avatar: "https://diarinho.com.br/wp-content/uploads/2018/07/lula-sera-solto_foto-jose-cruz-agencia-brasil.jpg", did_good_id: "id", did_good_date: Time.now.strftime("%Y"), did_good_signature: "Mandou Bem!" %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </li>
+        <!-- ============================================================== -->
+        <!-- End Messages -->
+        <!-- ============================================================== -->
+      </ul>
+      <!-- ============================================================== -->
+      <!-- User profile and search -->
+      <!-- ============================================================== -->
+      <ul class="navbar-nav my-lg-0">
+        <!-- ============================================================== -->
+        <!-- Comment -->
+        <!-- ============================================================== -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" onclick="$.get( '/att_saw_notifications', function( data ) { $('#notificationview').hide() });" href="" id="3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-message"></i>
+            <% unless current_user.sawnotifications %>
+              <div class="notify" id="notificationview"> <span class="heartbit"></span> <span class="point"></span> </div>
+            <% end %>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right mailbox scale-up">
+            <ul>
+              <li>
+                <div class="drop-title">Notificações</div>
+              </li>
+              <li>
+                <div class="message-center">
+                  <!-- Message -->
+                  <% current_user.notifications.last(5).reverse.each do |notification| %>
+                    <a href="<%= notification_path(notification) %>">
+                      <div class="btn btn-<%= notification_color(notification.kind) %> btn-circle"><i class="mdi mdi-<%= notification.kind %>"></i></div>
+                      <div class="mail-contnet">
+                        <h5><%= notification.title %></h5> <span class="mail-desc"><%= notification.message %></span> <span class="time"><%= distance_of_time_in_words(notification.created_at, DateTime.now) %></span> </div>
+                    </a>
+                  <% end %>
+                </div>
+              </li>
+              <li>
+                <a class="nav-link text-center" href="<%= notifications_path %>"> <strong>Ver todas as Notificações</strong> <i class="fa fa-angle-right"></i> </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <!-- ============================================================== -->
+        <!-- End Comment -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Messages -->
+        <!-- ============================================================== -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" onclick="$.get( '/att_saw_did_good', function( data ) { $('#didgoodview').hide() });" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-thumb-up"></i>
+            <% unless current_user.sawdidgood %>
+              <div class="notify" id="didgoodview"> <span class="heartbit"></span> <span class="point"></span> </div>
+            <% end %>
+          </a>
+          <div class="dropdown-menu mailbox dropdown-menu-right scale-up" aria-labelledby="2">
+            <ul>
+              <li>
+                <div class="drop-title">Novos Mandou-Bens</div>
+              </li>
+              <li>
+                <div class="message-center">
+                  <!-- Message -->
+                  <% current_user.did_goods.last(4).reverse.each do |didgood| %>
+                    <a href="<%= did_good_path(didgood) %>">
+                      <% if didgood.sender.avatar.attached? %>
+                        <div class="user-img"> <%= image_tag didgood.sender.avatar, class: "img-circle", style: "object-fit: cover; width: 50px; height: 50px;" %> </div>
+                        <div class="mail-contnet">
+                          <h5><%= didgood.sender.full_name %></h5> <span class="mail-desc"><%= didgood.description %></span> <span class="time"><%= distance_of_time_in_words(didgood.created_at, Time.now) %></span> </div>
+                      <% else %>
+                        <div class="user-img"> <%= image_tag "assets/images/users/focatia.jpeg", class: "img-circle", style: "object-fit: cover; width: 50px; height: 50px;" %> </div>
+                        <div class="mail-contnet">
+                          <h5><%= didgood.sender.full_name %></h5> <span class="mail-desc"><%= didgood.description %></span> <span class="time"><%= distance_of_time_in_words(didgood.created_at, Time.now) %></span> </div>
+                      <% end %>
+                    </a>
+                  <% end %>
+                </div>
+              </li>
+              <li>
+                <a class="nav-link text-center" href="<%= did_goods_path %>"> <strong>Ver todos os mandou-bens</strong> <i class="fa fa-angle-right"></i> </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <!-- ============================================================== -->
+        <!-- End Messages -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Profile -->
+        <!-- ============================================================== -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <% if current_user.avatar.attached? %>
+              <%= image_tag current_user.avatar, class: "profile-pic" %>
+            <% else %>
+              <%= image_tag "assets/images/users/focatia.jpg", class: "img-circle", style: "object-fit: cover; width: 50px; height: 50px;" %>
+            <% end %>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right scale-up user-dropdown">
+            <ul class="dropdown-user full-width">
+              <li>
+                <div class="dw-user-box">
+                  <div class="u-img">
+                    <% if current_user.avatar.attached? %>
+                      <%= image_tag current_user.avatar, class: "", style: "object-fit: cover; width: 80px; height: 70px;" %>
+                    <% else %>
+                      <%= image_tag "assets/images/users/focatia.jpg", style: "object-fit: cover; width: 80px; height: 70px;" %>
+                    <% end %>
+                  </div>
+                  <div class="u-text">
+                    <h4><%= current_user.full_name %></h4>
+                    <p class="text-muted"><%= current_user.email %></p>
+                    <a href="<%= edit_user_registration_path %>" class="btn btn-rounded btn-danger btn-sm">Ver Perfil</a>
+                  </div>
+                </div>
+              </li>
+              <li role="separator" class="divider">
+              <li><a href="<%= edit_user_registration_path %>"><i class="ti-user"></i> Meu Perfil</a></li>
+              <li><a href="<%= wallet_path %>"><i class="ti-wallet"></i> Carteira</a></li>
+              <li><a href="<%= notifications_path %>"><i class="ti-email"></i> Notificações</a></li>
+              <li role="separator" class="divider">
+              <li>
+                <%= link_to "<i class='fa fa-power-off'></i> Sair".html_safe, destroy_user_session_path, method: :delete %>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

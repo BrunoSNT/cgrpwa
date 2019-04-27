@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <% if @item.image.attached? %>
+          <%= image_tag @item.image, style: "width: 200px; height: 200px; object-fit: cover;" %>
+        <% end %>
+        <%= @item.name %><br>
+        <%= @item.description %><br>
+        <%= @item.value %><br>
+        <%= @item.quantity %><br>
+      </div>
+    </div>
+  </div>
+</div>

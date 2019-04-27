@@ -1,0 +1,43 @@
+<%= form_with(model: activity_category, local: true, html: { class: "form-material", id: ""}) do |form| %>
+  <% if activity_category.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(activity_category.errors.count, "error") %> prohibited this activity_category from being saved:</h2>
+
+      <ul>
+      <% activity_category.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="card" style="margin-top: 1em;">
+    <div class="card-body">
+      <div class="form-group">
+        <%= form.label :nome %>
+        <%= form.text_field :name, class: "form-control form-control-line" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :descrição %>
+        <%= form.text_area :description, class: "form-control", style: "min-height: 4em;" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :owner_value %>
+        <%= form.text_field :owner_value, class: "form-control form-control-line" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :member_value %>
+        <%= form.text_field :member_value, class: "form-control form-control-line" %>
+      </div>
+
+      <div class="actions", style="display:flex; justify-content: space-between;width:12em;">
+        <%= form.submit "Enviar", class: "btn btn-block btn-success" %>
+        
+      </div>
+
+
+    </div>
+  </div>
+<% end %>

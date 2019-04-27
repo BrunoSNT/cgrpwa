@@ -1,0 +1,97 @@
+<%= form_with(model: deal, local: true, html: { class: "form-horizontal", id: ""}) do |form| %>
+  <% if deal.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(deal.errors.count, "error") %> prohibited this deal from being saved:</h2>
+
+      <ul>
+      <% deal.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.hidden_field :user_id, value: current_user.id %>
+
+  <div class="field">
+    <%= form.label :deal_date %>
+    <%= form.datetime_select :deal_date, class: "form-control form-control-line" %>
+  </div>
+
+  <br>
+  <br>
+
+  <div class="form-group">
+    <%= form.label :client_name %>
+    <%= form.text_field :client_name, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :status %>
+    <%= form.select(:status, Deal.statuses.keys.map { |w| [w.humanize, w] }, {}, { :class => 'form-control p_input' }) %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :price %>
+    <%= form.text_field :price, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :client_company %>
+    <%= form.text_field :client_company, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :sector %>
+    <%= form.text_field :sector, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :sector_description %>
+    <%= form.text_area :sector_description, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :problems %>
+    <%= form.text_area :problems, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :address %>
+    <%= form.text_area :address, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :website %>
+    <%= form.text_field :website, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :telephone1 %>
+    <%= form.text_field :telephone1, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :telephone2 %>
+    <%= form.text_field :telephone2, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :email %>
+    <%= form.text_field :email, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :info %>
+    <%= form.text_area :info, class: "form-control form-control-line" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :arrival %>
+    <%= form.text_field :arrival, class: "form-control form-control-line"      %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Cadastrar", class: "btn btn-success" %>
+  </div>
+<% end %>

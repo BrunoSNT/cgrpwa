@@ -1,0 +1,16 @@
+<div style="display: flex">
+  <div class="row">
+    <%= params[:calendar_id] %>
+    <% @calendar_list.items.each do |calendar| %>
+    <div class="col-md-6">
+        <div class="card" style="min-height: 12em;">
+          <div class="card-body">
+            <h5 class="card-title"><%= calendar.summary %></h5>
+            <p class="card-text"><%= calendar.id %></p>
+            <%= link_to 'detalhes', events_path(calendar.id), class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+      <% end %>
+  </div>
+</div>

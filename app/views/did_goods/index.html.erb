@@ -1,0 +1,39 @@
+<div class="container bg-white p-4 rounded">
+  <div style="display: flex; align-content: space-between; justify-content: space-between;">
+    <h3>Mandou-bens Recebidos</h3>
+    <%= link_to 'Mandar Mandou-Bem', new_did_good_path, class: "btn btn-success" %>
+  </div>
+  <div class="row" style="max-height: 35em; overflow-y: auto;">
+    <% current_user.did_goods.reverse.each do |my_didgoods| %>
+      <div class="col-sm-12 col-xs-12 col-md-4">
+        <a href="<%= did_good_path(my_didgoods) %>" class="no-decoration">
+          <% if my_didgoods.is_superdidgood %>
+            <%= render 'did_goods/superdidgoodcard', didgood: my_didgoods, receiver_name: my_didgoods.sender.full_name %>
+          <% else %>
+            <%= render 'did_goods/card', receiver_name: my_didgoods.sender.full_name, description: my_didgoods.description, did_good_avatar: my_didgoods.photourl, did_good_id: my_didgoods.id, did_good_date: my_didgoods.created_at.strftime("%Y"), did_good_signature: my_didgoods.signature %>
+          <% end %>
+        </a>
+      </div>
+    <% end %>
+  </div>
+</div>
+<br><br>
+<div class="container bg-white p-4 rounded">
+  <div style="display: flex; align-content: space-between; justify-content: space-between;">
+    <h3>Mandou-bens Enviados</h3>
+    <%= link_to 'Mandar Mandou-Bem', new_did_good_path, class: "btn btn-success" %>
+  </div>
+  <div class="row" style="max-height: 35em; overflow-y: auto;">
+    <% current_user.reverse_did_goods.reverse.each do |my_didgoods| %>
+      <div class="col-sm-12 col-xs-12 col-md-4">
+        <a href="<%= did_good_path(my_didgoods) %>" class="no-decoration">
+          <% if my_didgoods.is_superdidgood %>
+            <%= render 'did_goods/superdidgoodcard', didgood: my_didgoods, receiver_name: false%>
+          <% else %>
+            <%= render 'did_goods/card', receiver_name: my_didgoods.receiver.full_name, description: my_didgoods.description, did_good_avatar: my_didgoods.photourl, did_good_id: my_didgoods.id, did_good_date: my_didgoods.created_at.strftime("%Y"), did_good_signature: my_didgoods.signature %>
+          <% end %>
+        </a>
+      </div>
+    <% end %>
+  </div>
+</div>

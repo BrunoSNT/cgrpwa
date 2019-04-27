@@ -1,0 +1,3 @@
+Payments#pending_payment
+
+<%= @greeting %>, find me in app/views/payments_mailer/pending_payment.text.erb
